@@ -1,0 +1,18 @@
+{
+    "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+    "actorSpecification": 1,
+    "name": "my-actor",
+    "title": "Project Puppeteer Crawler JavaScript",
+    "description": "Crawlee and Puppeteer project in JavaScript.",
+    "version": "0.0",
+    "meta": {
+        "templateId": "js-crawlee-puppeteer-chrome",
+        "generatedBy": "<FILL-IN-MODEL>"
+    },
+    "inputSchema": "./input_schema.json",
+    "outputSchema": "./output_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "dockerfile": "../Dockerfile"
+}

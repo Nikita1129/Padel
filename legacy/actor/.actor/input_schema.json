@@ -1,0 +1,130 @@
+{
+  "title": "Courtica Padel Occupancy Monitor",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "clubs": {
+      "title": "Cluburi",
+      "type": "array",
+      "description": "Cate o intrare per club: slug, nume, platforma (courtica sau padelpoint), durata_ore, url. Lasa campul gol ca sa folosesti lista implicita din cod.",
+      "editor": "json",
+      "prefill": [
+        {
+          "slug": "divi-padel",
+          "nume": "Divi Padel Club",
+          "durata_ore": 1,
+          "url": "https://www.courtica.md/en-MD/clubs/divi-padel?sport=padel",
+          "platforma": "courtica"
+        },
+        {
+          "slug": "ursu-padel",
+          "nume": "Ursu Padel",
+          "durata_ore": 0.5,
+          "url": "https://www.courtica.md/en-MD/clubs/ursu-padel?sport=padel",
+          "platforma": "courtica"
+        },
+        {
+          "slug": "padelpoint",
+          "nume": "PadelPoint",
+          "platforma": "padelpoint",
+          "durata_ore": 0.5,
+          "terenuri": 9,
+          "url": "https://padelpoint.md/booking/ro/"
+        },
+        {
+          "slug": "primus-padel-costesti",
+          "nume": "Primus Padel Costesti",
+          "platforma": "courtica",
+          "durata_ore": 0.5,
+          "url": "https://www.courtica.md/en-MD/clubs/primus-padel-costesti?sport=padel"
+        }
+      ]
+    },
+    "dateOffsets": {
+      "title": "Decalaj zile",
+      "type": "array",
+      "description": "0 = azi. Adauga 1 ca sa colectezi si rezervarile in avans pentru maine.",
+      "editor": "json",
+      "prefill": [
+        0
+      ]
+    },
+    "timezone": {
+      "title": "Fus orar",
+      "type": "string",
+      "description": "Fusul orar folosit pentru data zilei si pentru calculul coloanei viitor.",
+      "editor": "textfield",
+      "default": "Europe/Chisinau"
+    },
+    "useProxy": {
+      "title": "Foloseste Apify Proxy",
+      "type": "boolean",
+      "description": "Daca e bifat, cererile trec prin Apify Proxy.",
+      "default": true
+    },
+    "proxyCountry": {
+      "title": "Tara proxy",
+      "type": "string",
+      "description": "MD de obicei nu exista in grupul DATACENTER; RO este cea mai apropiata optiune sigura.",
+      "editor": "textfield",
+      "default": "RO"
+    },
+    "proxyGroups": {
+      "title": "Grupuri proxy",
+      "type": "array",
+      "description": "Grupurile Apify Proxy folosite, de regula DATACENTER.",
+      "editor": "json",
+      "default": [
+        "DATACENTER"
+      ]
+    },
+    "kvStoreName": {
+      "title": "Key-value store cu nume",
+      "type": "string",
+      "description": "Unde se salveaza screenshot-urile. Cheia: {club-slug}-{AAAA-LL-ZZ}.",
+      "editor": "textfield",
+      "default": "padel-screenshots"
+    },
+    "datasetName": {
+      "title": "Dataset cu nume",
+      "type": "string",
+      "description": "Unde se acumuleaza randurile, cate unul per slot. Seria istorica traieste aici.",
+      "editor": "textfield",
+      "default": "padel-ocupare"
+    },
+    "rezumatDatasetName": {
+      "title": "Dataset rezumat",
+      "type": "string",
+      "description": "Un rand per rulare si per club: ore vandute, procente ZI/SEARA, status. Pentru monitorizare rapida.",
+      "editor": "textfield",
+      "default": "padel-rezumat"
+    },
+    "pretOra": {
+      "title": "Pret pe ora (MDL)",
+      "type": "integer",
+      "description": "Folosit pentru coloana venit_mdl din rollup-ul pe terenuri. Schimba-l ca sa refaci forecastul.",
+      "default": 500
+    },
+    "terenKey": {
+      "title": "Cheia CSV cu rollup pe terenuri",
+      "type": "string",
+      "description": "Numele inregistrarii din key-value store in care se scrie rezumatul per teren.",
+      "editor": "textfield",
+      "default": "terenuri.csv"
+    },
+    "sheetsWebhookUrl": {
+      "title": "URL webhook Google Sheets",
+      "type": "string",
+      "description": "Optional. URL-ul /exec al unui Apps Script care adauga randurile in foaie (append).",
+      "editor": "textfield",
+      "isSecret": true
+    },
+    "renderWaitMs": {
+      "title": "Asteptare suplimentara la randare (ms)",
+      "type": "integer",
+      "description": "Pauza dupa aparitia grilei, ca sa se aseze tot continutul client-side.",
+      "default": 6000
+    }
+  },
+  "required": []
+}

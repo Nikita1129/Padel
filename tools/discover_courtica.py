@@ -3,16 +3,22 @@
 Run this on a machine with a real (residential) IP, e.g. your Mac:
 
     python tools/discover_courtica.py \
-        --club divi=https://courtica.md/... \
-        --club ursu=https://courtica.md/... \
-        --headed --interact 45
+        --club divi="https://www.courtica.md/en-MD/clubs/divi-padel?sport=padel" \
+        --club ursu="https://www.courtica.md/en-MD/clubs/ursu-padel?sport=padel" \
+        --with-dates
+
+`--with-dates` visits the grid twice per club, appending `date=<today>` and
+`date=<tomorrow>` (Europe/Chisinau) exactly as the legacy actor did, so no
+manual clicking is needed. Output goes to fixtures/<club>/<YYYY-MM-DD>/.
 
 For each club it:
   1. opens the booking grid in Chromium (Playwright),
   2. records every XHR/fetch request+response (URL, method, status, headers
      minus cookies/auth, post body, response body),
-  3. saves JSON responses, the rendered HTML and a screenshot under
-     fixtures/<club>/,
+  3. saves JSON responses, the server-sent document (document.html, i.e. what
+     plain `requests` would get), the rendered DOM (page.html), a screenshot
+     and a plain `requests` GET of the page itself (page_requests.html) with a
+     count of `data-available` cells in each, under fixtures/<club>/[date]/,
   4. optionally waits `--interact` seconds so you can click "tomorrow" in the
      headed browser and get those requests captured too,
   5. replays each captured JSON endpoint with plain `requests` (1 req/s) and
@@ -25,6 +31,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import zoneinfo
 import json
 import re
 import sys
@@ -72,7 +79,16 @@ def capture_club(pw, club: str, url: str, headed: bool, interact: int, out_root:
     )
     page = context.new_page()
     responses = []
-    page.on("response", lambda r: responses.append(r) if r.request.resource_type in CAPTURE_TYPES else None)
+    documents = []
+
+    def on_response(r):
+        rt = r.request.resource_type
+        if rt in CAPTURE_TYPES:
+            responses.append(r)
+        elif rt == "document":
+            documents.append(r)
+
+    page.on("response", on_response)
 
     started = dt.datetime.now().astimezone().isoformat(timespec="seconds")
     print(f"[{club}] opening {url}")
@@ -86,8 +102,20 @@ def capture_club(pw, club: str, url: str, headed: bool, interact: int, out_root:
         except Exception:
             pass
 
-    (out / "page.html").write_text(page.content(), encoding="utf-8")
+    rendered = page.content()
+    (out / "page.html").write_text(rendered, encoding="utf-8")
     page.screenshot(path=str(out / "screenshot.png"), full_page=True)
+    ssr_cells = None
+    for d in documents:
+        try:
+            body = d.body().decode("utf-8", errors="replace")
+        except Exception:
+            continue
+        (out / "document.html").write_text(body, encoding="utf-8")
+        ssr_cells = body.count("data-available=")
+        break
+    print(f"[{club}] data-available cells: rendered DOM={rendered.count('data-available=')} "
+          f"server document={ssr_cells}")
 
     log = []
     for idx, resp in enumerate(responses):
@@ -134,7 +162,9 @@ def capture_club(pw, club: str, url: str, headed: bool, interact: int, out_root:
     context.close()
     browser.close()
 
-    meta = {"club": club, "url": url, "captured_at": started, "user_agent": USER_AGENT, "requests": log}
+    meta = {"club": club, "url": url, "captured_at": started, "user_agent": USER_AGENT,
+            "rendered_data_available_cells": rendered.count("data-available="),
+            "server_document_data_available_cells": ssr_cells, "requests": log}
     (out / "network_log.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"[{club}] captured {len(log)} xhr/fetch responses -> {out}")
     return log
@@ -146,12 +176,24 @@ def replay_with_requests(club: str, url: str, log: list[dict], out_root: Path) -
     session.headers.update({"User-Agent": USER_AGENT, "Accept": "application/json, text/plain, */*",
                             "Referer": url, "Accept-Language": "ro-MD,ro;q=0.9,ru;q=0.8,en;q=0.7"})
     results = []
+    try:
+        r = session.get(url, timeout=30)
+        (out_root / club / "page_requests.html").write_text(r.text, encoding="utf-8")
+        results.append({"idx": -1, "url": url, "method": "GET", "status": r.status_code,
+                        "content_type": r.headers.get("content-type", ""), "body_len": len(r.content),
+                        "data_available_cells": r.text.count("data-available="), "body_head": r.text[:300]})
+        print(f"[{club}] requests GET page -> {r.status_code}, data-available cells={r.text.count('data-available=')}")
+    except Exception as exc:
+        results.append({"idx": -1, "url": url, "error": repr(exc)})
+        print(f"[{club}] requests GET page -> ERROR {exc!r}")
     for entry in log:
         if not (entry.get("saved_as") or "").endswith(".json"):
             continue
         time.sleep(1.0)
         headers = {}
-        for k in ("content-type", "accept", "x-requested-with", "origin"):
+        for k in ("content-type", "accept", "x-requested-with", "origin", "apikey",
+                  "x-client-info", "accept-profile", "content-profile", "prefer", "next-action",
+                  "next-router-state-tree", "rsc"):
             if k in entry["request_headers"]:
                 headers[k] = entry["request_headers"][k]
         try:
@@ -183,6 +225,8 @@ def main() -> int:
     ap.add_argument("--headed", action="store_true", help="show the browser window")
     ap.add_argument("--interact", type=int, default=0, help="seconds to wait for manual clicks (headed)")
     ap.add_argument("--out", default="fixtures", help="output directory (default: fixtures)")
+    ap.add_argument("--with-dates", action="store_true",
+                    help="visit ?date=<today> and ?date=<tomorrow> (Europe/Chisinau) instead of the bare URL")
     ap.add_argument("--no-replay", action="store_true", help="skip the plain-requests replay")
     ap.add_argument("--executable-path", default=None, help="Chromium binary override (rarely needed)")
     args = ap.parse_args()
@@ -192,7 +236,14 @@ def main() -> int:
         if "=" not in item:
             ap.error(f"--club expects NAME=URL, got {item!r}")
         name, url = item.split("=", 1)
-        clubs.append((name.strip(), url.strip()))
+        name, url = name.strip(), url.strip()
+        if args.with_dates:
+            today = dt.datetime.now(zoneinfo.ZoneInfo("Europe/Chisinau")).date()
+            for day in (today, today + dt.timedelta(days=1)):
+                sep = "&" if "?" in url else "?"
+                clubs.append((f"{name}/{day.isoformat()}", f"{url}{sep}date={day.isoformat()}"))
+        else:
+            clubs.append((name, url))
 
     out_root = Path(args.out)
     with sync_playwright() as pw:
