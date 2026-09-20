@@ -81,7 +81,7 @@ jobs:
             cp -r run-html/. fixtures/real/
             git add fixtures/real
           fi
-          git add data/raw
+          if [ -d data/raw ]; then git add data/raw; fi
           if git diff --cached --quiet; then
             echo "nothing to commit"
             exit 0
