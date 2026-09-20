@@ -9,6 +9,9 @@
 #                 html  = plain GET only (fail if the grid is not in the HTML)
 #                 browser = headless Chromium only
 timezone: Europe/Chisinau
+# Google Sheet that receives the derived tabs (the long id from its URL, between /d/ and /edit).
+# Credentials never live here: the service-account JSON comes from the env var GOOGLE_SERVICE_ACCOUNT_JSON.
+sheet_id: ""
 clubs:
   - slug: divi-padel
     name: Divi Padel Club

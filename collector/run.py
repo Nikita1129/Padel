@@ -1,11 +1,15 @@
 """Collect today's and tomorrow's grid for every configured club.
 
+    python -m collector.run                      # append to data/raw/, rebuild tabs, push to Sheets
     python -m collector.run --dry-run            # print what would be written
+    python -m collector.run --no-push            # append to data/raw/ only
     python -m collector.run --save-html DIR      # also keep the fetched pages
 
-Exit codes: 0 = success, 1 = nothing collected/written because of an error.
-Any failure (blocked, zero slots, unexpected shape, over the time budget)
-happens BEFORE anything is written, so a failed run leaves no partial rows.
+Exit codes: 0 = success, 1 = failure. Any collection failure (blocked, zero
+slots, unexpected shape, over the time budget) happens BEFORE anything is
+written, so a failed run leaves no partial rows. If the Sheets push fails
+AFTER the raw rows were appended, the exit code is 1 but the rows are kept:
+rerun `python -m collector.derive --push` once the cause is fixed.
 """
 from __future__ import annotations
 
@@ -19,9 +23,8 @@ from pathlib import Path
 from .config import DEFAULT_CONFIG, Club, load_config
 from .fetch import Browser, FetchError, Throttle, fetch_grid, grid_url
 from .parse import ParseError, Slot, parse_grid
+from .storage import RAW_COLUMNS, RAW_DIR, StorageError, append_rows
 
-RAW_COLUMNS = ["snapshot_ts", "club", "court", "slot_date", "slot_start", "slot_end",
-               "status", "raw_status", "price", "booking_type", "source"]
 RUN_BUDGET_S = 60.0
 
 
@@ -98,6 +101,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--dry-run", action="store_true", help="print rows, write nothing")
     ap.add_argument("--save-html", metavar="DIR", help="save every fetched page under DIR/<club>/<date>_<source>.html")
     ap.add_argument("--club", action="append", help="restrict to these club slugs (repeatable)")
+    ap.add_argument("--no-push", action="store_true", help="append raw rows but do not touch the Google Sheet")
+    ap.add_argument("--raw-dir", default=str(RAW_DIR))
     args = ap.parse_args(argv)
 
     cfg = load_config(args.config)
@@ -125,8 +130,27 @@ def main(argv: list[str] | None = None) -> int:
         print(f"dry-run: {len(rows)} rows, nothing written", file=sys.stderr)
         return 0
 
-    print("error: writing rows is implemented in Phase 2; use --dry-run", file=sys.stderr)
-    return 1
+    try:
+        written = append_rows(rows, Path(args.raw_dir))
+    except StorageError as exc:
+        print(f"RUN FAILED, nothing written: {exc}", file=sys.stderr)
+        return 1
+    for path, n in written.items():
+        log(f"appended {n} rows to {path}")
+    if args.no_push:
+        return 0
+
+    from .derive import build_tables
+    from .sheets import SheetsError, push_tables
+
+    try:
+        final, daily = build_tables(Path(args.raw_dir), cfg.timezone)
+        push_tables(final, daily)
+    except Exception as exc:  # raw rows are already safe on disk; report and fail
+        print(f"SHEETS PUSH FAILED (raw rows were appended and are kept): {exc!r}", file=sys.stderr)
+        return 1
+    log(f"pushed slots_final ({len(final)} rows) and daily_occupancy ({len(daily)} rows)")
+    return 0
 
 
 if __name__ == "__main__":

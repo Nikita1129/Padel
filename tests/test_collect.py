@@ -93,3 +93,31 @@ def test_throttle_spaces_requests():
     t = Throttle(1.0, sleep=lambda s: (slept.append(s), clock.__setitem__(0, clock[0] + s)), clock=lambda: clock[0])
     t.wait(); t.wait(); clock[0] += 0.4; t.wait()
     assert slept == pytest.approx([1.0, 0.6])
+
+
+def test_main_real_run_appends_then_pushes(cfg, monkeypatch, tmp_path):
+    from collector import derive, sheets
+    from collector.storage import read_all_rows
+
+    monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({
+        "divi-padel": read_fixture("divi-padel", "synthetic-2026-09-20.html"),
+        "ursu-padel": read_fixture("ursu-padel", "synthetic-2026-09-20.html"),
+    }))
+    pushed = {}
+    monkeypatch.setattr(sheets, "push_tables", lambda final, daily: pushed.update(final=final, daily=daily))
+    assert run.main(["--raw-dir", str(tmp_path)]) == 0
+    rows = read_all_rows(tmp_path)
+    assert len(rows) == 2 * (64 + 28)
+    assert set(pushed) == {"final", "daily"}
+    assert len(pushed["daily"]) >= 2  # both clubs, tomorrow's date at least
+
+    # push failure keeps the raw rows and exits 1
+    def boom(final, daily):
+        raise sheets.SheetsError("quota")
+    monkeypatch.setattr(sheets, "push_tables", boom)
+    assert run.main(["--raw-dir", str(tmp_path)]) == 1
+    assert len(read_all_rows(tmp_path)) == 4 * (64 + 28)
+
+    # --no-push never touches sheets
+    monkeypatch.setattr(sheets, "push_tables", boom)
+    assert run.main(["--raw-dir", str(tmp_path), "--no-push"]) == 0
