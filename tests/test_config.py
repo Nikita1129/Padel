@@ -3,13 +3,15 @@ import pytest
 from collector.config import ConfigError, load_config
 
 
-def test_default_config_has_two_courtica_clubs(cfg):
+def test_default_config_clubs(cfg):
     assert cfg.timezone == "Europe/Chisinau"
-    assert [c.slug for c in cfg.clubs] == ["divi-padel", "ursu-padel"]
-    divi, ursu = cfg.clubs
-    assert (divi.expected_courts, divi.slot_minutes) == (4, 60)
+    assert [c.slug for c in cfg.clubs] == ["divi-padel", "ursu-padel", "primus-padel-costesti", "padelpoint"]
+    divi, ursu, primus, pp = cfg.clubs
+    assert (divi.expected_courts, divi.slot_minutes, divi.platform) == (4, 60, "courtica")
     assert (ursu.expected_courts, ursu.slot_minutes) == (1, 30)
-    assert all(c.fetch == "auto" for c in cfg.clubs)
+    assert (primus.expected_courts, primus.slot_minutes, primus.fetch) == (2, 30, "auto")
+    assert (pp.platform, pp.fetch, pp.expected_courts, pp.slot_minutes) == ("padelpoint", "browser", 9, 30)
+    assert cfg.run_budget_seconds == 240
 
 
 def test_adding_a_club_is_config_only(tmp_path):
@@ -30,6 +32,9 @@ def test_adding_a_club_is_config_only(tmp_path):
     "clubs:\n  - {slug: x, name: X, url: http://a, expected_courts: 1, slot_minutes: 60}\n",
     "clubs:\n  - {slug: x, name: X, url: https://a, expected_courts: 1, slot_minutes: 60}\n"
     "  - {slug: x, name: Y, url: https://b, expected_courts: 1, slot_minutes: 60}\n",
+    "clubs:\n  - {slug: x, name: X, url: https://a, expected_courts: 1, slot_minutes: 60, platform: other}\n",
+    "clubs:\n  - {slug: x, name: X, url: https://a, expected_courts: 1, slot_minutes: 60, platform: padelpoint}\n",
+    "run_budget_seconds: 0\nclubs:\n  - {slug: x, name: X, url: https://a, expected_courts: 1, slot_minutes: 60}\n",
 ])
 def test_invalid_config_is_rejected(tmp_path, body):
     p = tmp_path / "clubs.yaml"

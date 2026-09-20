@@ -81,6 +81,58 @@ class _GridParser(HTMLParser):
             self._row.court_parts.append(data)
 
 
+def build_slots(club: Club, courts: dict[str, list[tuple[str, str, str]]], slot_date: dt.date,
+                now: dt.datetime) -> list[Slot]:
+    """Shared validation for every platform.
+
+    `courts` maps court name -> list of (HH:MM, status, raw_status) where status is
+    free | booked | blocked | unknown as reported by the site; booked cells whose
+    start is <= now become past. Raises ParseError on any inconsistency.
+    """
+    if now.tzinfo is None:
+        raise ValueError("now must be timezone-aware")
+    if not courts:
+        raise ParseError(f"{club.slug} {slot_date}: no courts")
+    if len(courts) != club.expected_courts:
+        raise ParseError(
+            f"{club.slug} {slot_date}: expected {club.expected_courts} courts, found {len(courts)}: {sorted(courts)}"
+        )
+    step = dt.timedelta(minutes=club.slot_minutes)
+    slots: list[Slot] = []
+    for court, cells in courts.items():
+        if not court:
+            raise ParseError(f"{club.slug} {slot_date}: a court with {len(cells)} slots has no name")
+        if not cells:
+            raise ParseError(f"{club.slug} {slot_date} {court}: no slots")
+        times: list[dt.time] = []
+        for raw_time, status, raw_status in cells:
+            if not TIME_RE.match(raw_time):
+                raise ParseError(f"{club.slug} {slot_date} {court}: bad time {raw_time!r}")
+            if status not in ("free", "booked", "blocked", "unknown"):
+                raise ParseError(f"{club.slug} {slot_date} {court}: unknown status {status!r}")
+            if status == "unknown":
+                raise ParseError(f"{club.slug} {slot_date} {court} {raw_time}: unrecognised state {raw_status!r}")
+            start = dt.time.fromisoformat(raw_time)
+            start_dt = dt.datetime.combine(slot_date, start, tzinfo=now.tzinfo)
+            if status == "booked" and start_dt <= now:
+                status = "past"
+            end_dt = start_dt + step
+            if end_dt.date() != slot_date and end_dt.time() != dt.time(0, 0):
+                raise ParseError(f"{club.slug} {slot_date} {court}: slot {raw_time} + {club.slot_minutes} min crosses midnight")
+            times.append(start)
+            slots.append(Slot(club=club.name, court=court, slot_date=slot_date, slot_start=start,
+                              slot_end=end_dt.time(), status=status, raw_status=raw_status))
+        if len(set(times)) != len(times):
+            raise ParseError(f"{club.slug} {slot_date} {court}: duplicate slot times")
+        ordered = sorted(dt.datetime.combine(slot_date, t) for t in times)
+        gaps = {int((b - a).total_seconds() // 60) for a, b in zip(ordered, ordered[1:])}
+        if gaps and min(gaps) != club.slot_minutes:
+            raise ParseError(
+                f"{club.slug} {slot_date} {court}: grid step is {min(gaps)} min, config says {club.slot_minutes}"
+            )
+    return slots
+
+
 def has_grid(html: str) -> bool:
     """Cheap check used to decide whether a plain GET already contains the grid."""
     return "data-available=" in html
@@ -105,42 +157,16 @@ def parse_grid(html: str, club: Club, slot_date: dt.date, now: dt.datetime) -> l
             raise ParseError(f"{club.slug} {slot_date}: court {court!r} appears twice")
         courts[court] = row.cells
 
-    if len(courts) != club.expected_courts:
-        raise ParseError(
-            f"{club.slug} {slot_date}: expected {club.expected_courts} courts, found {len(courts)}: {sorted(courts)}"
-        )
-
-    step = dt.timedelta(minutes=club.slot_minutes)
-    slots: list[Slot] = []
+    normalised: dict[str, list[tuple[str, str, str]]] = {}
     for court, cells in courts.items():
-        times: list[dt.time] = []
+        out = []
         for raw_time, raw_avail, raw_pending in cells:
-            if not TIME_RE.match(raw_time):
-                raise ParseError(f"{club.slug} {slot_date} {court}: bad data-time {raw_time!r}")
             status = STATUS_BY_RAW.get(raw_avail.strip().lower())
             if status is None:
                 raise ParseError(f"{club.slug} {slot_date} {court}: unknown data-available value {raw_avail!r}")
             if raw_pending not in ("", "true", "false"):
                 raise ParseError(f"{club.slug} {slot_date} {court}: unknown data-pending value {raw_pending!r}")
-            start = dt.time.fromisoformat(raw_time)
-            start_dt = dt.datetime.combine(slot_date, start, tzinfo=now.tzinfo)
-            if status == "booked" and start_dt <= now:
-                status = "past"
-            end_dt = start_dt + step
-            if end_dt.date() != slot_date and end_dt.time() != dt.time(0, 0):
-                raise ParseError(f"{club.slug} {slot_date} {court}: slot {raw_time} + {club.slot_minutes} min crosses midnight")
-            times.append(start)
-            slots.append(Slot(
-                club=club.name, court=court, slot_date=slot_date, slot_start=start,
-                slot_end=end_dt.time(), status=status,
-                raw_status=f"available={raw_avail}" + (f";pending={raw_pending}" if raw_pending else ""),
-            ))
-        if len(set(times)) != len(times):
-            raise ParseError(f"{club.slug} {slot_date} {court}: duplicate slot times")
-        ordered = sorted(dt.datetime.combine(slot_date, t) for t in times)
-        gaps = {int((b - a).total_seconds() // 60) for a, b in zip(ordered, ordered[1:])}
-        if gaps and min(gaps) != club.slot_minutes:
-            raise ParseError(
-                f"{club.slug} {slot_date} {court}: grid step is {min(gaps)} min, config says {club.slot_minutes}"
-            )
-    return slots
+            raw_status = f"available={raw_avail}" + (f";pending={raw_pending}" if raw_pending else "")
+            out.append((raw_time, status, raw_status))
+        normalised[court] = out
+    return build_slots(club, normalised, slot_date, now)

@@ -8,7 +8,12 @@
 # fetch           auto  = try a plain HTML GET first, fall back to a headless browser
 #                 html  = plain GET only (fail if the grid is not in the HTML)
 #                 browser = headless Chromium only
+# platform        courtica (default) or padelpoint (padelpoint.md booking page,
+#                 always a browser: courts are opened by clicking on a map)
 timezone: Europe/Chisinau
+# Whole-run time budget. Courtica clubs take ~1 s per page; PadelPoint needs a
+# browser and ~9 court clicks per day, so it alone can take 1-2 minutes.
+run_budget_seconds: 240
 # Google Sheet that receives the derived tabs (the long id from its URL, between /d/ and /edit).
 # Credentials never live here: the service-account JSON comes from the env var GOOGLE_SERVICE_ACCOUNT_JSON.
 sheet_id: "12ERstCiyaaJVNjnK2pgmnHo5VcDFtsVnmN2DNq5g9VM"
@@ -28,3 +33,16 @@ clubs:
     expected_courts: 1
     slot_minutes: 30
     fetch: auto
+  - slug: primus-padel-costesti
+    name: Primus Padel Costesti
+    url: https://www.courtica.md/en-MD/clubs/primus-padel-costesti?sport=padel
+    expected_courts: 2
+    slot_minutes: 30
+    fetch: auto
+  - slug: padelpoint
+    name: PadelPoint
+    platform: padelpoint
+    url: https://padelpoint.md/booking/ro/
+    expected_courts: 9
+    slot_minutes: 30
+    fetch: browser

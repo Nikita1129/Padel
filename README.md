@@ -7,8 +7,10 @@ derivate într-un Google Sheet: `slots_final` (ultima stare observată înainte 
 începerea slotului + când a fost văzut prima dată rezervat) și `daily_occupancy`
 (ocupare pe zi și club, împărțită dimineață / după-amiază / seară).
 
-Rulează pe GitHub Actions (`.github/workflows/collect.yml`), fără browser (grila vine
-în HTML), fără servicii plătite. Playwright rămâne doar ca rezervă automată.
+Rulează pe GitHub Actions (`.github/workflows/collect.yml`), fără servicii plătite.
+Cluburile Courtica (Divi, Ursu, Primus) se citesc dintr-un GET simplu, grila vine în
+HTML. PadelPoint are altă platformă: un browser headless deschide fiecare teren prin
+click pe hartă (`collector/padelpoint.py`), de aceea rularea durează 1–2 minute.
 
 ## Cum adaugi un club
 
@@ -22,7 +24,9 @@ Rulează pe GitHub Actions (`.github/workflows/collect.yml`), fără browser (gr
      slot_minutes: 60        # rularea eșuează dacă pasul grilei diferă
      fetch: auto
    ```
-3. Commit. Următoarea rulare programată îl include. Dacă nu știi numărul de terenuri
+3. Commit. Următoarea rulare programată îl include. Valabil pentru orice club de pe
+   Courtica. Un club de pe altă platformă are nevoie de un adaptor nou în `collector/`
+   (vezi `padelpoint.py` ca model) și de `platform:` în config. Dacă nu știi numărul de terenuri
    sau pasul, pornește o rulare manuală în dry-run (vezi mai jos): mesajul de eroare
    spune ce a găsit în grilă.
 

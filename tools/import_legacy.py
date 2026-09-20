@@ -2,6 +2,7 @@
 
     python tools/import_legacy.py legacy/data/dataset_padel-ocupare_*.json
     python tools/import_legacy.py --all-clubs ...      # also clubs not in config/clubs.yaml
+    python tools/import_legacy.py --club PadelPoint ... # only the named club(s), by `club` name
     python tools/import_legacy.py --dry-run ...
 
 Mapping (nothing is guessed; fields the old system never had stay empty):
@@ -15,7 +16,8 @@ Mapping (nothing is guessed; fields the old system never had stay empty):
   price, booking_type <- empty (never exposed)
   source       <- apify_legacy
 Rows with status != OK (sentinel rows without a slot) are skipped and counted.
-Refuses to run twice: stops if data/raw already contains apify_legacy rows.
+Refuses to import a club twice: stops if data/raw already contains apify_legacy
+rows for any club about to be imported (other clubs can be added later).
 """
 from __future__ import annotations
 
@@ -86,22 +88,26 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("export", nargs="+", help="legacy padel-ocupare JSON export(s)")
     ap.add_argument("--raw-dir", default=str(RAW_DIR))
     ap.add_argument("--all-clubs", action="store_true", help="import clubs that are not in config/clubs.yaml too")
+    ap.add_argument("--club", action="append", help="import only these club names (repeatable)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
     cfg = load_config()
     tz = zoneinfo.ZoneInfo(cfg.timezone)
     keep = None if args.all_clubs else {c.name for c in cfg.clubs}
+    if args.club:
+        keep = set(args.club)
     raw_dir = Path(args.raw_dir)
-
-    if raw_dir.exists() and any(r["source"] == SOURCE for r in read_all_rows(raw_dir)):
-        print(f"refusing: {raw_dir} already contains {SOURCE} rows", file=sys.stderr)
-        return 1
 
     items = []
     for path in args.export:
         items.extend(json.loads(Path(path).read_text(encoding="utf-8")))
     rows, stats = convert(items, tz, keep)
+    already = {r["club"] for r in read_all_rows(raw_dir) if r["source"] == SOURCE} if raw_dir.exists() else set()
+    already &= {r["club"] for r in rows}
+    if already:
+        print(f"refusing: {raw_dir} already contains {SOURCE} rows for {sorted(already)}", file=sys.stderr)
+        return 1
     print(" ".join(f"{k}={v}" for k, v in stats.items()), file=sys.stderr)
     if not rows:
         print("nothing to import", file=sys.stderr)

@@ -53,6 +53,11 @@ def test_import_cli_refuses_second_run(tmp_path):
     assert len(read_all_rows(raw)) == 2
     assert import_legacy.main([str(export), "--raw-dir", str(raw)]) == 1
     assert len(read_all_rows(raw)) == 2
+    # a club not imported yet can still be added later
+    export2 = tmp_path / "export2.json"
+    export2.write_text(json.dumps([legacy_item(club="Ursu Padel", teren="Padel (exterior)", durata_ore=0.5)]))
+    assert import_legacy.main([str(export2), "--raw-dir", str(raw)]) == 0
+    assert len(read_all_rows(raw)) == 3
 
 
 def test_parity_compare_reports_mismatches_only_on_overlapping_dates():

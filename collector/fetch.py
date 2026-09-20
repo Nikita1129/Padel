@@ -66,10 +66,13 @@ class Browser:
             viewport={"width": 1600, "height": 1000},
         )
 
-    def get(self, url: str) -> str:
+    def new_page(self):
         if self._context is None:
             self._start()
-        page = self._context.new_page()
+        return self._context.new_page()
+
+    def get(self, url: str) -> str:
+        page = self.new_page()
         try:
             page.goto(url, wait_until="domcontentloaded", timeout=BROWSER_NAV_TIMEOUT_MS)
             page.wait_for_selector(GRID_SELECTOR, timeout=BROWSER_GRID_TIMEOUT_MS)

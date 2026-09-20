@@ -22,6 +22,7 @@ from pathlib import Path
 
 from .config import DEFAULT_CONFIG, Club, load_config
 from .fetch import Browser, FetchError, Throttle, fetch_grid, grid_url
+from .padelpoint import collect_padelpoint
 from .parse import ParseError, Slot, parse_grid
 from .storage import RAW_COLUMNS, RAW_DIR, StorageError, append_rows
 
@@ -67,13 +68,19 @@ def collect(clubs: list[Club], dates: list[dt.date], now: dt.datetime, save_html
                 elapsed = time.monotonic() - started
                 if elapsed > budget_s:
                     raise CollectError(f"run budget of {budget_s:.0f}s exceeded after {elapsed:.0f}s; aborting before {club.slug} {slot_date}")
-                url = grid_url(club, slot_date)
-                html, source = fetch_grid(club, url, throttle, browser, log=log)
-                if save_html is not None:
-                    out = save_html / club.slug
-                    out.mkdir(parents=True, exist_ok=True)
-                    (out / f"{slot_date.isoformat()}_{source}.html").write_text(html, encoding="utf-8")
-                slots = parse_grid(html, club, slot_date, now)
+                if club.platform == "padelpoint":
+                    throttle.wait()
+                    source = "browser"
+                    slots = collect_padelpoint(club, slot_date, now, browser,
+                                               save_dir=(save_html / club.slug) if save_html else None, log=log)
+                else:
+                    url = grid_url(club, slot_date)
+                    html, source = fetch_grid(club, url, throttle, browser, log=log)
+                    if save_html is not None:
+                        out = save_html / club.slug
+                        out.mkdir(parents=True, exist_ok=True)
+                        (out / f"{slot_date.isoformat()}_{source}.html").write_text(html, encoding="utf-8")
+                    slots = parse_grid(html, club, slot_date, now)
                 n_new = 0
                 for slot in slots:
                     row = row_from_slot(snapshot_ts, slot, source)
@@ -124,7 +131,8 @@ def main(argv: list[str] | None = None) -> int:
 
     log = lambda msg: print(msg, file=sys.stderr)  # progress goes to stderr, data to stdout
     try:
-        rows = collect(clubs, dates, now, save_html=Path(args.save_html) if args.save_html else None, log=log)
+        rows = collect(clubs, dates, now, save_html=Path(args.save_html) if args.save_html else None, log=log,
+                       budget_s=cfg.run_budget_seconds)
     except (FetchError, ParseError, CollectError) as exc:
         print(f"RUN FAILED, nothing written: {exc}", file=sys.stderr)
         return 1
