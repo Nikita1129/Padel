@@ -16,6 +16,10 @@ on:
         description: "Run even outside the 06:30-23:59 Chisinau window"
         type: boolean
         default: true
+      commit_html:
+        description: "Commit the fetched pages into fixtures/real/ (for parser tests)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -72,13 +76,18 @@ jobs:
       - name: Commit raw data
         if: always()
         run: |
-          if [ -z "$(git status --porcelain data/raw)" ]; then
-            echo "no new raw data"
+          if [ "${{ inputs.commit_html }}" = "true" ] && [ -d run-html ]; then
+            mkdir -p fixtures/real
+            cp -r run-html/. fixtures/real/
+            git add fixtures/real
+          fi
+          git add data/raw
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw
           git commit -m "data: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase origin "${{ github.ref_name }}"
           git push origin "HEAD:${{ github.ref_name }}"
