@@ -1,0 +1,17 @@
+# Secrets / credentials — never commit
+.env
+.env.*
+*.json.key
+service_account*.json
+google-service-account*.json
+credentials*.json
+token*.json
+
+# Local environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS / editor noise
+.DS_Store
