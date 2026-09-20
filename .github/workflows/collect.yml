@@ -1,3 +1,4 @@
+# Hourly Courtica / PadelPoint occupancy snapshot. Touching this file re-registers the cron schedule.
 name: collect
 
 on:
