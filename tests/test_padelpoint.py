@@ -32,6 +32,14 @@ def test_buttons_to_slots(clubs, now):
     assert booked.status == "booked"
 
 
+def test_expirat_is_past_as_reported_by_the_site(clubs, now):
+    club = clubs["padelpoint"]
+    courts = {f"Court {n}": buttons([("07:00", "Expirat", True), ("07:30", "Alege", False)]) for n in range(1, 10)}
+    slots = slots_from_buttons(club, courts, DAY, now)
+    s = next(x for x in slots if x.court == "Court 1" and x.slot_start == dt.time(7, 0))
+    assert (s.status, s.raw_status) == ("past", "Expirat;disabled=true")
+
+
 def test_unknown_state_fails(clubs, now):
     club = clubs["padelpoint"]
     courts = {f"Court {n}": buttons([("07:00", "Alege", False), ("07:30", "Rezervat?", True)]) for n in range(1, 10)}

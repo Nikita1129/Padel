@@ -2,8 +2,10 @@
 
 The page is a single-page app: the day is chosen in an <input type="date">,
 each court is opened by clicking its label (C1..C9) on a map, and the slots are
-<button> elements whose text is "HH:MM\\nAlege" (free) or "HH:MM\\nOcupat"
-(booked). The "23:00\\nSfarsit" button is the closing marker, not a slot.
+<button> elements whose text is "HH:MM\\nAlege" (free), "HH:MM\\nOcupat"
+(booked) or "HH:MM\\nExpirat" (already started: unlike Courtica, this site
+does tell past from booked). The "23:00\\nSfarsit" button is the closing
+marker, not a slot.
 Everything needs a browser; nothing is server-rendered.
 """
 from __future__ import annotations
@@ -16,7 +18,7 @@ from .config import Club
 from .parse import ParseError, Slot, build_slots
 
 SLOT_TEXT_RE = re.compile(r"^(\d{1,2}:\d{2})\s*\n?\s*(.*)$", re.S)
-STATE_BY_TEXT = {"alege": "free", "ocupat": "booked"}
+STATE_BY_TEXT = {"alege": "free", "ocupat": "booked", "expirat": "past"}
 WAIT_AFTER_LOAD_MS = 6_000
 WAIT_AFTER_DATE_MS = 2_500
 WAIT_AFTER_CLICK_MS = 1_100

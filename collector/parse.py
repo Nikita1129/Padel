@@ -86,8 +86,8 @@ def build_slots(club: Club, courts: dict[str, list[tuple[str, str, str]]], slot_
     """Shared validation for every platform.
 
     `courts` maps court name -> list of (HH:MM, status, raw_status) where status is
-    free | booked | blocked | unknown as reported by the site; booked cells whose
-    start is <= now become past. Raises ParseError on any inconsistency.
+    free | booked | blocked | past | unknown as reported by the site; booked cells
+    whose start is <= now become past. Raises ParseError on any inconsistency.
     """
     if now.tzinfo is None:
         raise ValueError("now must be timezone-aware")
@@ -108,7 +108,7 @@ def build_slots(club: Club, courts: dict[str, list[tuple[str, str, str]]], slot_
         for raw_time, status, raw_status in cells:
             if not TIME_RE.match(raw_time):
                 raise ParseError(f"{club.slug} {slot_date} {court}: bad time {raw_time!r}")
-            if status not in ("free", "booked", "blocked", "unknown"):
+            if status not in ("free", "booked", "blocked", "past", "unknown"):
                 raise ParseError(f"{club.slug} {slot_date} {court}: unknown status {status!r}")
             if status == "unknown":
                 raise ParseError(f"{club.slug} {slot_date} {court} {raw_time}: unrecognised state {raw_status!r}")
