@@ -5,7 +5,9 @@ teren pentru azi și mâine de pe grilele publice Courtica, o păstrează brut �
 `data/raw/AAAA-LL.csv` (append-only, commit automat în repo) și publică două tabele
 derivate într-un Google Sheet: `slots_final` (ultima stare observată înainte de
 începerea slotului + când a fost văzut prima dată rezervat) și `daily_occupancy`
-(ocupare pe zi și club, împărțită dimineață / după-amiază / seară).
+(ocupare pe zi și club, împărțită dimineață / după-amiază / seară, plus
+`revenue_estimate_mdl` = ore-teren rezervate × `price_per_hour` din config; e o
+estimare la preț de listă presupus, iar pe Courtica „rezervat" include și blocările).
 
 Rulează pe GitHub Actions (`.github/workflows/collect.yml`), fără servicii plătite.
 Cluburile Courtica (Divi, Ursu, Primus) se citesc dintr-un GET simplu, grila vine în

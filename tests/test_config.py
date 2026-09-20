@@ -12,6 +12,7 @@ def test_default_config_clubs(cfg):
     assert (primus.expected_courts, primus.slot_minutes, primus.fetch) == (2, 30, "auto")
     assert (pp.platform, pp.fetch, pp.expected_courts, pp.slot_minutes) == ("padelpoint", "browser", 9, 30)
     assert cfg.run_budget_seconds == 240
+    assert [c.price_per_hour for c in cfg.clubs] == [500, 250, 300, 500]
 
 
 def test_adding_a_club_is_config_only(tmp_path):

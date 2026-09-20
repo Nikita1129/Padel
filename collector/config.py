@@ -25,6 +25,7 @@ class Club:
     slot_minutes: int
     fetch: str = "auto"
     platform: str = "courtica"
+    price_per_hour: float | None = None  # MDL, assumption used only for the revenue estimate
 
 
 @dataclasses.dataclass(frozen=True)
@@ -70,9 +71,12 @@ def load_config(path: Path | str = DEFAULT_CONFIG) -> Config:
                 slot_minutes=int(item["slot_minutes"]),
                 fetch=str(item.get("fetch", "auto")),
                 platform=str(item.get("platform", "courtica")),
+                price_per_hour=float(item["price_per_hour"]) if item.get("price_per_hour") is not None else None,
             )
         except (KeyError, TypeError, ValueError) as exc:
             raise ConfigError(f"{path}: club #{i} is invalid: {exc!r}") from exc
+        if club.price_per_hour is not None and club.price_per_hour < 0:
+            raise ConfigError(f"{path}: club {club.slug}: price_per_hour must be >= 0")
         if club.expected_courts < 1 or club.slot_minutes < 1:
             raise ConfigError(f"{path}: club {club.slug}: expected_courts and slot_minutes must be >= 1")
         if club.fetch not in FETCH_MODES:

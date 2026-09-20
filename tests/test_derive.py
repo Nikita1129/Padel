@@ -51,10 +51,15 @@ def test_daily_occupancy_split():
     for start, status in spec.items():
         final.append({"club": "Divi Padel Club", "court": "№1 - Blue", "slot_date": "2026-11-03", "slot_start": start,
                       "slot_end": "", "final_status": status, "last_observed_at": "", "first_seen_booked_at": "", "observations": "1"})
-    daily = daily_occupancy(final)
+    for r in final:
+        r["slot_end"] = f"{int(r['slot_start'][:2]) + 1:02d}:00"
+    daily = daily_occupancy(final, {"Divi Padel Club": 500})
     assert len(daily) == 1 and list(daily[0]) == DAILY_COLUMNS
     d = daily[0]
     assert (d["total_slots"], d["booked_slots"], d["occupancy_pct"]) == ("6", "4", "66.7")
+    assert (d["booked_hours"], d["price_per_hour_assumed"], d["revenue_estimate_mdl"]) == ("4", "500", "2000")
+    no_price = daily_occupancy(final)[0]
+    assert (no_price["booked_hours"], no_price["price_per_hour_assumed"], no_price["revenue_estimate_mdl"]) == ("4", "", "")
     assert (d["morning_slots"], d["morning_booked"], d["morning_pct"]) == ("2", "1", "50.0")
     assert (d["afternoon_slots"], d["afternoon_booked"], d["afternoon_pct"]) == ("2", "1", "50.0")
     assert (d["evening_slots"], d["evening_booked"], d["evening_pct"]) == ("2", "2", "100.0")
@@ -71,3 +76,9 @@ def test_build_tables_is_idempotent(tmp_path):
     final, daily = first
     assert [(r["club"], r["date"], r["booked_slots"], r["total_slots"]) for r in daily] == [
         ("Divi Padel Club", "2026-11-03", "1", "2"), ("Ursu Padel", "2026-11-03", "0", "1")]
+
+
+def test_slot_hours_handles_midnight_end():
+    from collector.derive import slot_hours
+    assert slot_hours({"slot_start": "23:30", "slot_end": "00:00"}) == 0.5
+    assert slot_hours({"slot_start": "07:00", "slot_end": "08:00"}) == 1.0

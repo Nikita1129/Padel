@@ -4,7 +4,10 @@ slots_final:      one row per club/court/date/slot with the last status observed
                   BEFORE the slot started, and when it was first seen booked.
 daily_occupancy:  per club and date: total/booked slots and occupancy %, overall
                   and split by slot start: morning < 12:00, afternoon 12:00-16:59,
-                  evening >= 17:00.
+                  evening >= 17:00; plus booked court-hours and
+                  revenue_estimate_mdl = booked hours x price_per_hour from config
+                  (an ESTIMATE: list-price assumption, and "booked" on Courtica
+                  also covers blocked/training slots).
 
     python -m collector.derive            # print table sizes and a preview
     python -m collector.derive --push     # also rewrite both tabs in the Google Sheet
@@ -17,6 +20,7 @@ import sys
 import zoneinfo
 from pathlib import Path
 
+from .config import DEFAULT_CONFIG, load_config
 from .storage import RAW_DIR, read_all_rows
 
 SLOTS_FINAL_COLUMNS = ["club", "court", "slot_date", "slot_start", "slot_end",
@@ -24,7 +28,8 @@ SLOTS_FINAL_COLUMNS = ["club", "court", "slot_date", "slot_start", "slot_end",
 DAILY_COLUMNS = ["club", "date", "total_slots", "booked_slots", "occupancy_pct",
                  "morning_slots", "morning_booked", "morning_pct",
                  "afternoon_slots", "afternoon_booked", "afternoon_pct",
-                 "evening_slots", "evening_booked", "evening_pct"]
+                 "evening_slots", "evening_booked", "evening_pct",
+                 "booked_hours", "price_per_hour_assumed", "revenue_estimate_mdl"]
 VALID_FINAL = {"free", "booked", "blocked", "unknown"}
 
 
@@ -68,8 +73,19 @@ def slots_final(rows: list[dict], tz: zoneinfo.ZoneInfo) -> list[dict]:
     return out
 
 
-def daily_occupancy(final: list[dict]) -> list[dict]:
+def slot_hours(row: dict) -> float:
+    start = dt.time.fromisoformat(row["slot_start"])
+    end = dt.time.fromisoformat(row["slot_end"])
+    minutes = (end.hour * 60 + end.minute) - (start.hour * 60 + start.minute)
+    if minutes <= 0:  # slot ending at 00:00
+        minutes += 24 * 60
+    return minutes / 60
+
+
+def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None) -> list[dict]:
+    prices = prices or {}
     agg: dict[tuple, dict] = {}
+    hours: dict[tuple, float] = {}
     for row in final:
         key = (row["club"], row["slot_date"])
         a = agg.setdefault(key, {p: [0, 0] for p in ("all", "morning", "afternoon", "evening")})
@@ -77,6 +93,8 @@ def daily_occupancy(final: list[dict]) -> list[dict]:
         for p in ("all", period(row["slot_start"])):
             a[p][0] += 1
             a[p][1] += booked
+        if booked:
+            hours[key] = hours.get(key, 0.0) + slot_hours(row)
 
     def pct(total, booked):
         return f"{100 * booked / total:.1f}" if total else ""
@@ -91,14 +109,21 @@ def daily_occupancy(final: list[dict]) -> list[dict]:
             row[f"{p}_slots"] = str(a[p][0])
             row[f"{p}_booked"] = str(a[p][1])
             row[f"{p}_pct"] = pct(*a[p])
+        booked_h = hours.get(key, 0.0)
+        price = prices.get(key[0])
+        row["booked_hours"] = f"{booked_h:g}"
+        row["price_per_hour_assumed"] = f"{price:g}" if price is not None else ""
+        row["revenue_estimate_mdl"] = f"{round(booked_h * price):d}" if price is not None else ""
         out.append(row)
     return out
 
 
-def build_tables(raw_dir: Path = RAW_DIR, tz_name: str = "Europe/Chisinau") -> tuple[list[dict], list[dict]]:
+def build_tables(raw_dir: Path = RAW_DIR, tz_name: str = "Europe/Chisinau",
+                 config_path=DEFAULT_CONFIG) -> tuple[list[dict], list[dict]]:
     rows = read_all_rows(raw_dir)
     final = slots_final(rows, zoneinfo.ZoneInfo(tz_name))
-    return final, daily_occupancy(final)
+    prices = {c.name: c.price_per_hour for c in load_config(config_path).clubs if c.price_per_hour is not None}
+    return final, daily_occupancy(final, prices)
 
 
 def main(argv: list[str] | None = None) -> int:

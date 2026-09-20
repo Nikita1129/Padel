@@ -8,6 +8,9 @@
 # fetch           auto  = try a plain HTML GET first, fall back to a headless browser
 #                 html  = plain GET only (fail if the grid is not in the HTML)
 #                 browser = headless Chromium only
+# price_per_hour  MDL per court-hour used ONLY for revenue_estimate_mdl in daily_occupancy.
+#                 The sites do not expose prices; these are assumptions carried over from the
+#                 legacy actor. Replace with real list prices when known.
 # platform        courtica (default) or padelpoint (padelpoint.md booking page,
 #                 always a browser: courts are opened by clicking on a map)
 timezone: Europe/Chisinau
@@ -27,18 +30,21 @@ clubs:
     expected_courts: 4
     slot_minutes: 60
     fetch: auto
+    price_per_hour: 500
   - slug: ursu-padel
     name: Ursu Padel
     url: https://www.courtica.md/en-MD/clubs/ursu-padel?sport=padel
     expected_courts: 1
     slot_minutes: 30
     fetch: auto
+    price_per_hour: 250
   - slug: primus-padel-costesti
     name: Primus Padel Costesti
     url: https://www.courtica.md/en-MD/clubs/primus-padel-costesti?sport=padel
     expected_courts: 2
     slot_minutes: 30
     fetch: auto
+    price_per_hour: 300
   - slug: padelpoint
     name: PadelPoint
     platform: padelpoint
@@ -46,3 +52,4 @@ clubs:
     expected_courts: 9
     slot_minutes: 30
     fetch: browser
+    price_per_hour: 500
