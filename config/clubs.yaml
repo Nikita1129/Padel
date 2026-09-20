@@ -1,0 +1,24 @@
+# Clubs tracked by the collector. Adding a club = adding one entry here.
+#
+# slug            short id used in file names and logs
+# name            value written in the `club` column (kept identical to the legacy data)
+# url             Courtica booking grid; the day is selected with &date=YYYY-MM-DD
+# expected_courts the run fails if the grid shows a different number of courts
+# slot_minutes    the run fails if the grid step differs
+# fetch           auto  = try a plain HTML GET first, fall back to a headless browser
+#                 html  = plain GET only (fail if the grid is not in the HTML)
+#                 browser = headless Chromium only
+timezone: Europe/Chisinau
+clubs:
+  - slug: divi-padel
+    name: Divi Padel Club
+    url: https://www.courtica.md/en-MD/clubs/divi-padel?sport=padel
+    expected_courts: 4
+    slot_minutes: 60
+    fetch: auto
+  - slug: ursu-padel
+    name: Ursu Padel
+    url: https://www.courtica.md/en-MD/clubs/ursu-padel?sport=padel
+    expected_courts: 1
+    slot_minutes: 30
+    fetch: auto

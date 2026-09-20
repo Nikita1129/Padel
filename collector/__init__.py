@@ -1,0 +1,1 @@
+"""Courtica court-occupancy collector."""
