@@ -15,3 +15,6 @@ __pycache__/
 
 # OS / editor noise
 .DS_Store
+
+# Pages fetched by a run (uploaded as a workflow artifact, never committed)
+run-html/

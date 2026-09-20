@@ -102,6 +102,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--save-html", metavar="DIR", help="save every fetched page under DIR/<club>/<date>_<source>.html")
     ap.add_argument("--club", action="append", help="restrict to these club slugs (repeatable)")
     ap.add_argument("--no-push", action="store_true", help="append raw rows but do not touch the Google Sheet")
+    ap.add_argument("--respect-window", action="store_true",
+                    help="exit 0 without doing anything when the local time is outside collection_window")
     ap.add_argument("--raw-dir", default=str(RAW_DIR))
     args = ap.parse_args(argv)
 
@@ -114,6 +116,10 @@ def main(argv: list[str] | None = None) -> int:
             return 1
     tz = zoneinfo.ZoneInfo(cfg.timezone)
     now = dt.datetime.now(tz)
+    if args.respect_window and not (cfg.window_start <= now.time() <= cfg.window_end):
+        print(f"skipped: {now.strftime('%H:%M %Z')} is outside the collection window "
+              f"{cfg.window_start:%H:%M}-{cfg.window_end:%H:%M}", file=sys.stderr)
+        return 0
     dates = [now.date(), now.date() + dt.timedelta(days=1)]
 
     log = lambda msg: print(msg, file=sys.stderr)  # progress goes to stderr, data to stdout

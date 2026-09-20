@@ -36,3 +36,16 @@ def test_invalid_config_is_rejected(tmp_path, body):
     p.write_text(body)
     with pytest.raises(ConfigError):
         load_config(p)
+
+
+def test_window_and_sheet_id_from_default_config(cfg):
+    import datetime as dt
+    assert (cfg.window_start, cfg.window_end) == (dt.time(6, 30), dt.time(23, 59))
+
+
+@pytest.mark.parametrize("window", ["nonsense", "23:00-06:00", "6:30"])
+def test_bad_window_rejected(tmp_path, window):
+    p = tmp_path / "clubs.yaml"
+    p.write_text(f"collection_window: '{window}'\nclubs:\n  - {{slug: x, name: X, url: https://a, expected_courts: 1, slot_minutes: 60}}\n")
+    with pytest.raises(ConfigError, match="collection_window"):
+        load_config(p)

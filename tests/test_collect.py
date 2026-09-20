@@ -121,3 +121,32 @@ def test_main_real_run_appends_then_pushes(cfg, monkeypatch, tmp_path):
     # --no-push never touches sheets
     monkeypatch.setattr(sheets, "push_tables", boom)
     assert run.main(["--raw-dir", str(tmp_path), "--no-push"]) == 0
+
+
+def test_respect_window_skips_outside_hours(cfg, monkeypatch, capsys):
+    import datetime as dt
+    import zoneinfo
+
+    class FakeDatetime(dt.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return cls(2026, 12, 1, 5, 35, tzinfo=tz)  # 05:35 local: outside 06:30-23:59
+
+    monkeypatch.setattr(run.dt, "datetime", FakeDatetime)
+    called = []
+    monkeypatch.setattr(run, "fetch_grid", lambda *a, **k: called.append(1) or (_ for _ in ()).throw(AssertionError("must not fetch")))
+    assert run.main(["--respect-window", "--dry-run"]) == 0
+    assert "skipped" in capsys.readouterr().err and not called
+
+    class InWindow(dt.datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return cls(2026, 12, 1, 6, 35, tzinfo=tz)
+
+    monkeypatch.setattr(run.dt, "datetime", InWindow)
+    monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({
+        "divi-padel": read_fixture("divi-padel", "synthetic-2026-09-20.html"),
+        "ursu-padel": read_fixture("ursu-padel", "synthetic-2026-09-20.html"),
+    }))
+    assert run.main(["--respect-window", "--dry-run"]) == 0
+    assert "184 rows" in capsys.readouterr().err

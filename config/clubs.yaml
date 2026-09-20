@@ -11,7 +11,10 @@
 timezone: Europe/Chisinau
 # Google Sheet that receives the derived tabs (the long id from its URL, between /d/ and /edit).
 # Credentials never live here: the service-account JSON comes from the env var GOOGLE_SERVICE_ACCOUNT_JSON.
-sheet_id: ""
+sheet_id: "12ERstCiyaaJVNjnK2pgmnHo5VcDFtsVnmN2DNq5g9VM"
+# Scheduled runs outside this local-time window exit 0 without doing anything
+# (cron is UTC; the workflow schedules a wide UTC range and lets this decide).
+collection_window: "06:30-23:59"
 clubs:
   - slug: divi-padel
     name: Divi Padel Club
