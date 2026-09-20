@@ -1,7 +1,8 @@
 # Legacy system: Apify actor (Puppeteer) — analysis
 
-Source: `legacy/actor/` (unzipped from the upload on 2026-09-20). The zip
-contained only the actor code; **the CSV export of collected data is not here yet**.
+Source: `legacy/actor/` (actor code) and `legacy/data/` (Apify dataset exports in
+JSON, taken 2026-09-10 18:01 UTC: `padel-ocupare` = 120 834 slot rows,
+`padel-rezumat` = 1 080 summary rows). Both unmodified.
 
 ## What it did (src/main.js)
 
@@ -65,6 +66,27 @@ data-available=false|true` (reconstructed, marked as such), `price` and
 `booking_type` empty (never exposed), `source = apify_legacy`. PARSE FAILED rows
 are dropped (they carry no slot).
 
+## What the data export shows (verified from `legacy/data/`)
+
+- Period: 2026-09-02 22:30 → 2026-09-10 21:00 local, **270 runs**, no missing dates.
+- **Schedule: every 30 minutes, 06:00–22:30 Europe/Chisinau, 34 runs/day** — twice
+  the intended hourly cadence. (Gaps between runs: 30 min in 261 of 269 cases; the
+  7 gaps of 450 min are the nightly pause 22:30→06:00.)
+- **4 clubs per run**, only today (`dateOffsets=[0]`): Divi, Ursu, PadelPoint, Primus.
+  PadelPoint alone is **64 %** of all rows (9 courts × 32 half-hour slots); Divi 14 %,
+  Ursu 6 %, Primus 15 %. Rows per run: 448 (385 on the two failed runs).
+- Courts and slots actually observed:
+  - Divi Padel Club: `№1 - Blue`, `№2 - Green`, `№3 - Red`, `№4 - Black`; 16 slots
+    of 1 h, 07:00–22:00.
+  - Ursu Padel: `Padel (exterior)`; 28 slots of 30 min, 08:00–21:30.
+- Reliability: 1078/1080 club-runs OK. The 2 failures are Divi, both at 11:30 local
+  (`Navigating frame was detached`). So a headless browser through Apify
+  **datacenter** proxies (country RO) was *not* blocked by Courtica — the known
+  block applies to plain (non-browser) fetches.
+- No duplicate (run, club, court, date, slot) keys inside a run.
+- `ocupat=1` rows: 55 268, of which `viitor=0` (past, not booked) is the majority
+  reason late in the day — confirming the past-slot trap.
+
 ## Cost bug 1 — ~170 dataset reads per row written
 
 `src/main.js` lines 426–437: **every run** calls `dataset.getInfo()` and then
@@ -73,10 +95,20 @@ are dropped (they carry no slot).
 `zilnic.csv` and to run the 7-day coverage check. It is not a per-push dedup (there
 is no dedup at all — `pushData(toateRandurile)` is a single unconditional write),
 but the cost shape is the same: reads per run = dataset size, so total reads grow
-quadratically with time. The new design computes derived tables from local CSVs
-in git, so remote reads are zero.
+quadratically with time. Modelled on the export (each run re-reads everything
+written before it): 16.25 M reads over 9 days for 120 834 rows written = **134
+reads per row**, the same order as the 170/row seen on the bill (a longer history
+gives a higher ratio). The new design computes derived tables from local CSVs in
+git, so remote reads are zero.
 
 ## Cost bug 2 — 59 compute units / month
+
+Verified from the data export: **34 runs/day (every 30 min), 4 clubs, ~448 rows per
+run** — i.e. 2× the intended frequency and 2× the intended clubs, with the heaviest
+club (PadelPoint, 9 sequential court clicks) being one you do not track. At
+~1 020 runs/month, 59 CU means ≈ 0.058 CU per run: ≈ 52 s at 4 GB or ≈ 105 s at
+2 GB. The memory setting is not in the export, but either value is consistent with
+the fixed waits below, so the console is no longer needed to explain the bill.
 
 Visible in code/config (verified):
 
@@ -93,11 +125,6 @@ Visible in code/config (verified):
   image (full Chrome).
 - **`Actor.fail()` on incomplete coverage** makes any partially blocked run count
   as a failed run while still consuming its full duration.
-
-Not visible in the code (assumptions, need your Apify console): the schedule's
-frequency and the run memory setting. Compute units = GB × hours, so a 4 GB
-default with ~2 min runs, hourly, is ≈ 60 CU/month — consistent with 59, but I
-cannot confirm without the run list.
 
 Also present: `routes.js` and `test/main.test.js` are untouched template
 boilerplate (they crawl apify.com); they are not used by `main.js`.

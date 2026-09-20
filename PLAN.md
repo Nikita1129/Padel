@@ -1,7 +1,8 @@
 # Courtica occupancy tracker — plan
 
-Status: **Phase 0 in progress** — legacy code analysed; still waiting for the
-legacy CSV export and for real fixtures (this environment cannot reach courtica.md).
+Status: **Phase 0 complete except live fixtures** — legacy code and data analysed;
+this environment (and WebFetch) cannot reach courtica.md, and the user prefers not
+to run anything locally. Decision requested below on how to proceed.
 Everything under "Findings" is verified with a tool result; "Assumptions" are not.
 
 ## Goal
@@ -23,9 +24,13 @@ today and tomorrow at each configured Courtica club, append raw rows to
    - `data-available="false"` covers booked, blocked **and past** slots; the DOM
      cannot tell them apart (legacy comment, calibrated 2026-08-20).
    - Site stack per legacy comment: Next.js + Supabase.
-2. **The legacy CSV export is missing** — the zip had only source code.
-3. **This environment cannot reach courtica.md** (`CONNECT tunnel failed, 403` from
-   the egress proxy = organisation network policy, not Courtica). PyPI/GitHub work.
+2. **Legacy data received** (JSON exports, in `legacy/data/`): 270 runs every 30 min
+   over 2026-09-02..09-10, 4 clubs, real court names and slot grids for Divi and
+   Ursu, 1078/1080 club-runs OK **through Apify datacenter proxies with a headless
+   browser** — so a real browser from a datacenter IP was not blocked.
+3. **This environment cannot reach courtica.md**: `curl` gets `CONNECT tunnel
+   failed, 403` from the egress proxy and WebFetch returns `EGRESS_BLOCKED` —
+   organisation network policy, not Courtica. PyPI/GitHub work.
 4. Python 3.12 + all allowed dependencies install in `.venv/`.
 5. `tools/discover_courtica.py` verified offline against a local dummy site: it
    captures XHR/fetch bodies, the server-sent document, the rendered DOM, a
@@ -48,36 +53,38 @@ today and tomorrow at each configured Courtica club, append raw rows to
 - (d) Price / booking type: **not exposed in the DOM** (legacy never saw them);
   unknown for JSON.
 
-## Blocked — what I need
+## How to get real fixtures without the user running anything
 
-1. The **legacy CSV export** of `padel-ocupare` into `legacy/` (needed for Phase 4
-   mapping and parity, and to confirm the schema above with real rows).
-2. Run discovery on your Mac (residential IP) and commit/send `fixtures/`:
+Proposed: Phase 1 builds the parser against **synthetic fixtures that reproduce
+the DOM documented in the legacy actor** (`td[data-time][data-available]`, `<th>`
+court names), populated with the real court names and slot grids from the export.
+The collector gets a `--save-html DIR` flag. The first GitHub Actions
+`workflow_dispatch` run (Phase 3, triggered by me through the GitHub tool) saves
+the real HTML as a workflow artifact; I commit it to `fixtures/` and re-run the
+parser tests against it before any scheduled run writes data. If GitHub's IPs are
+blocked, the fallback (launchd / VPS) is produced as the spec already requires.
 
-       python3.12 -m venv .venv && source .venv/bin/activate
-       pip install -r requirements.txt && playwright install chromium
-       python tools/discover_courtica.py \
-         --club divi="https://www.courtica.md/en-MD/clubs/divi-padel?sport=padel" \
-         --club ursu="https://www.courtica.md/en-MD/clubs/ursu-padel?sport=padel" \
-         --with-dates
-
-   Run it once in the evening (after ~21:00) so today's fixture contains past
-   slots next to booked ones. No login, no clicking needed, ≤1 request/s.
-3. From the Apify console, for the 59 CU question: the schedule frequency and the
-   run memory (MB) — a screenshot is enough.
+Optional shortcut: allowing `courtica.md` in this environment's network policy
+(claude.ai/code → environment settings → network access, see
+https://code.claude.com/docs/en/claude-code-on-the-web) would let me capture real
+fixtures right away with `tools/discover_courtica.py`.
 
 ## Proposed approach (conditional on fixtures)
 
 - **Collector** (`collector/`): `config/clubs.yaml` lists clubs with `name`, `slug`,
   `url`, `expected_courts`, `slot_minutes`. Strategy order, decided by fixtures:
-  (1) plain `requests` GET of the page if the grid is server-rendered → parse
-  `data-available` cells; (2) plain `requests` to a JSON endpoint if one exists
-  and replays; (3) Playwright headless fallback, same output schema.
+  (1) plain `requests` GET of the page; if the HTML contains the grid cells, parse
+  them (no browser); (2) otherwise Playwright headless (Chromium) renders the
+  page and the same HTML parser runs on the DOM. Both paths share one parser.
+  The legacy evidence makes (2) the expected path; (1) costs one request and
+  self-discovers a server-rendered grid if Courtica ever exposes one.
   One run = today + tomorrow per club, ≤1 req/s, hard 60 s budget.
 - **Validation before any write**: HTTP ≠ 200, zero slots, court count ≠
   `expected_courts`, unknown status value, or unexpected response shape → exit 1,
   nothing written.
-- **Raw schema** exactly as specified. `status` mapping from the DOM:
+- **Raw schema** exactly as specified, with one question: `source` is specified as
+  `api | browser`; a plain-HTML GET is neither. Proposal: `html` for that path,
+  `browser` for Playwright, `api` reserved for a JSON endpoint. **Needs approval.** `status` mapping from the DOM:
   `true → free`; `false` and `slot_start > now → booked`; `false` and
   `slot_start <= now → past`; anything else → `unknown` (and the run fails if any
   `unknown` appears). `raw_status` = the literal attribute value.
