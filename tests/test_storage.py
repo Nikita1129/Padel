@@ -7,7 +7,7 @@ def make_row(**over):
     row = {c: "" for c in RAW_COLUMNS}
     row.update({"snapshot_ts": "2026-11-03T18:00:00+02:00", "club": "Divi Padel Club", "court": "№1 - Blue",
                 "slot_date": "2026-11-03", "slot_start": "19:00", "slot_end": "20:00", "status": "booked",
-                "raw_status": "data-available=false", "source": "browser"})
+                "raw_status": "available=false", "source": "browser"})
     row.update(over)
     return row
 

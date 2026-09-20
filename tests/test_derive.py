@@ -8,7 +8,7 @@ TZ = zoneinfo.ZoneInfo("Europe/Chisinau")
 
 
 def obs(ts, status, **over):
-    return make_row(snapshot_ts=ts, status=status, raw_status="data-available=" + ("true" if status == "free" else "false"), **over)
+    return make_row(snapshot_ts=ts, status=status, raw_status="available=" + ("true" if status == "free" else "false"), **over)
 
 
 def test_last_status_before_start_and_first_seen_booked():

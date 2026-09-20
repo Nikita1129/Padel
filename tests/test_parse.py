@@ -19,7 +19,7 @@ def test_divi_grid(clubs, now):
     last = next(s for s in slots if s.slot_start == dt.time(22, 0))
     assert last.slot_end == dt.time(23, 0)
     assert {s.status for s in slots} <= {"free", "booked", "past"}
-    assert {s.raw_status for s in slots} == {"data-available=true", "data-available=false"}
+    assert {s.raw_status for s in slots} == {"available=true", "available=false"}
     assert all(s.price == "" and s.booking_type == "" for s in slots)
 
 
@@ -35,7 +35,7 @@ def test_past_vs_booked_depends_on_now(clubs, now):
     html = read_fixture("divi-padel", "synthetic-2026-09-20.html")
     slots = parse_grid(html, clubs["divi-padel"], DAY, now)   # now = 14:30
     for s in slots:
-        if s.raw_status == "data-available=true":
+        if s.raw_status.startswith("available=true"):
             assert s.status == "free"
         elif s.slot_start <= dt.time(14, 0):
             assert s.status == "past", s
@@ -88,3 +88,37 @@ def test_wrong_step_raises(clubs, now):
 def test_naive_now_rejected(clubs):
     with pytest.raises(ValueError):
         parse_grid("<td data-time='07:00' data-available='true'>", clubs["ursu-padel"], DAY, dt.datetime(2026, 9, 20))
+
+
+REAL_NOW = dt.datetime(2026, 9, 20, 12, 48, tzinfo=dt.timezone(dt.timedelta(hours=3)))  # capture time of fixtures/real
+
+
+@pytest.mark.parametrize("slug, day, n_slots, courts, expected", [
+    ("divi-padel", "2026-09-20", 64, 4, {"past": 24, "booked": 30, "free": 10}),
+    ("divi-padel", "2026-09-21", 64, 4, {"free": 41, "booked": 23}),
+    ("ursu-padel", "2026-09-20", 28, 1, {"past": 10, "booked": 16, "free": 2}),
+    ("ursu-padel", "2026-09-21", 28, 1, {"free": 24, "booked": 4}),
+])
+def test_real_pages_captured_from_github_actions(clubs, slug, day, n_slots, courts, expected):
+    """Real server-rendered pages fetched by the first workflow run (plain GET, no browser)."""
+    html = read_fixture("real", slug, f"{day}_html.html")
+    slots = parse_grid(html, clubs[slug], dt.date.fromisoformat(day), REAL_NOW)
+    assert len(slots) == n_slots and len({s.court for s in slots}) == courts
+    counts = {}
+    for s in slots:
+        counts[s.status] = counts.get(s.status, 0) + 1
+    assert counts == expected
+    assert {s.raw_status for s in slots} <= {"available=true;pending=false", "available=false;pending=false"}
+
+
+def test_real_pages_differ_between_today_and_tomorrow(clubs):
+    """The ?date= parameter really selects the day: the two captures are not the same grid."""
+    a = parse_grid(read_fixture("real", "divi-padel", "2026-09-20_html.html"), clubs["divi-padel"], dt.date(2026, 9, 21), REAL_NOW)
+    b = parse_grid(read_fixture("real", "divi-padel", "2026-09-21_html.html"), clubs["divi-padel"], dt.date(2026, 9, 21), REAL_NOW)
+    assert [s.raw_status for s in a] != [s.raw_status for s in b]
+
+
+def test_unknown_pending_value_raises(clubs, now):
+    html = '<table><tr><th>Padel (exterior)</th><td data-time="08:00" data-available="true" data-pending="maybe"></td></tr></table>'
+    with pytest.raises(ParseError, match="unknown data-pending"):
+        parse_grid(html, clubs["ursu-padel"], DAY, now)

@@ -1,8 +1,25 @@
 # Courtica occupancy tracker — plan
 
-Status: **Phase 0 complete except live fixtures** — legacy code and data analysed;
-this environment (and WebFetch) cannot reach courtica.md, and the user prefers not
-to run anything locally. Decision requested below on how to proceed.
+Status: **all phases implemented.** Real pages were captured by the first GitHub
+Actions run (2026-09-20 12:48 local) and are in `fixtures/real/`; the parser is
+tested against them. Remaining: the Google secret in GitHub, the first non-dry run,
+and switching the default branch to `main`.
+
+## Phase 0 answers (verified on fixtures/real/, captured from GitHub Actions)
+
+- (a) **No JSON endpoint is needed: the grid is server-rendered.** A plain `requests`
+  GET from a GitHub runner returned the full grid for both clubs and both days in
+  ~1 s per page (`source=html`). No browser, no proxy. Playwright stays as an
+  automatic fallback only.
+- (b) Per-cell status values: `data-available` ∈ {true, false} and `data-pending`
+  ∈ {false} (no `true` seen yet). Both are kept verbatim in `raw_status`.
+- (c) Late in the day a started slot and a booked one are both `data-available=false`;
+  the site does not distinguish them. The collector labels `past` by time, and
+  `slots_final` only uses observations made before the slot started, so the
+  ambiguity never reaches the derived tables.
+- (d) Price and booking type are **not exposed** per slot; the words appear only in
+  the app's translation strings. Both columns stay empty.
+- `?date=YYYY-MM-DD` selects the day: today's and tomorrow's captures differ.
 Everything under "Findings" is verified with a tool result; "Assumptions" are not.
 
 ## Goal

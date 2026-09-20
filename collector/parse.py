@@ -1,16 +1,18 @@
 """Parse a Courtica booking grid (HTML) into slot observations.
 
-Grid structure (documented by the legacy actor, calibrated 2026-08-20, and
-confirmed by the court names in the legacy data export):
+Grid structure (real pages captured 2026-09-20, see fixtures/real/; the grid is
+server-rendered, so a plain GET is enough):
 
-    <tr><th>№1 - Blue</th>
-        <td data-time="07:00" data-available="false">…</td>
-        <td data-time="08:00" data-available="true">…</td> …</tr>
+    <tr><th scope="row">№1 - Blue</th>
+        <td data-court="<uuid>" data-time="07:00" data-available="false" data-pending="false">07:00</td>
+        <td data-court="<uuid>" data-time="08:00" data-available="true"  data-pending="false">08:00</td> …</tr>
 
 data-available="true"  -> free
 data-available="false" -> not bookable: booked, blocked OR already started.
 The site does not distinguish those three; this parser labels a "false" cell
-`past` when its start time is <= now and `booked` otherwise.
+`past` when its start time is <= now and `booked` otherwise. data-pending is
+kept verbatim in raw_status (always "false" so far). No price or booking type
+is exposed per cell.
 """
 from __future__ import annotations
 
@@ -45,7 +47,7 @@ class Slot:
 @dataclasses.dataclass
 class _Row:
     court_parts: list[str] = dataclasses.field(default_factory=list)
-    cells: list[tuple[str, str]] = dataclasses.field(default_factory=list)  # (data-time, data-available)
+    cells: list[tuple[str, str, str]] = dataclasses.field(default_factory=list)  # (data-time, data-available, data-pending)
 
 
 class _GridParser(HTMLParser):
@@ -63,7 +65,7 @@ class _GridParser(HTMLParser):
         elif tag == "td" and self._row is not None:
             a = dict(attrs)
             if "data-time" in a and "data-available" in a:
-                self._row.cells.append((a["data-time"] or "", a["data-available"] or ""))
+                self._row.cells.append((a["data-time"] or "", a["data-available"] or "", a.get("data-pending") or ""))
 
     def handle_endtag(self, tag):
         if tag == "th":
@@ -94,7 +96,7 @@ def parse_grid(html: str, club: Club, slot_date: dt.date, now: dt.datetime) -> l
     if not p.rows:
         raise ParseError(f"{club.slug} {slot_date}: no grid cells (td[data-time][data-available]) found")
 
-    courts: dict[str, list[tuple[str, str]]] = {}
+    courts: dict[str, list[tuple[str, str, str]]] = {}
     for row in p.rows:
         court = " ".join(" ".join(row.court_parts).split())
         if not court:
@@ -112,12 +114,14 @@ def parse_grid(html: str, club: Club, slot_date: dt.date, now: dt.datetime) -> l
     slots: list[Slot] = []
     for court, cells in courts.items():
         times: list[dt.time] = []
-        for raw_time, raw_avail in cells:
+        for raw_time, raw_avail, raw_pending in cells:
             if not TIME_RE.match(raw_time):
                 raise ParseError(f"{club.slug} {slot_date} {court}: bad data-time {raw_time!r}")
             status = STATUS_BY_RAW.get(raw_avail.strip().lower())
             if status is None:
                 raise ParseError(f"{club.slug} {slot_date} {court}: unknown data-available value {raw_avail!r}")
+            if raw_pending not in ("", "true", "false"):
+                raise ParseError(f"{club.slug} {slot_date} {court}: unknown data-pending value {raw_pending!r}")
             start = dt.time.fromisoformat(raw_time)
             start_dt = dt.datetime.combine(slot_date, start, tzinfo=now.tzinfo)
             if status == "booked" and start_dt <= now:
@@ -128,7 +132,8 @@ def parse_grid(html: str, club: Club, slot_date: dt.date, now: dt.datetime) -> l
             times.append(start)
             slots.append(Slot(
                 club=club.name, court=court, slot_date=slot_date, slot_start=start,
-                slot_end=end_dt.time(), status=status, raw_status=f"data-available={raw_avail}",
+                slot_end=end_dt.time(), status=status,
+                raw_status=f"available={raw_avail}" + (f";pending={raw_pending}" if raw_pending else ""),
             ))
         if len(set(times)) != len(times):
             raise ParseError(f"{club.slug} {slot_date} {court}: duplicate slot times")
