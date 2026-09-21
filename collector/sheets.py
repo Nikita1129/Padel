@@ -12,11 +12,15 @@ import os
 import yaml
 
 from .config import DEFAULT_CONFIG
-from .derive import DAILY_COLUMNS, SLOTS_FINAL_COLUMNS
+from .derive import DAILY_COLUMNS, DASHBOARD_COLUMNS, SLOTS_FINAL_COLUMNS
 
 ENV_CREDENTIALS = "GOOGLE_SERVICE_ACCOUNT_JSON"
 TAB_SLOTS = "slots_final"
 TAB_DAILY = "daily_occupancy"
+TAB_DASHBOARD = "dashboard"
+DASHBOARD_NOTE = ("Venitul este o ESTIMARE: ore-teren rezervate x pretul presupus din config/clubs.yaml. "
+                  "Site-urile nu publica preturi. Pe Courtica \"rezervat\" include si blocarile "
+                  "(mentenanta, antrenamente, turnee). Se numara doar zilele observate complet.")
 
 
 class SheetsError(RuntimeError):
@@ -45,9 +49,12 @@ def open_spreadsheet(sheet_id: str):
     return client.open_by_key(sheet_id)
 
 
-def rewrite_tab(spreadsheet, title: str, columns: list[str], rows: list[dict]) -> None:
+def rewrite_tab(spreadsheet, title: str, columns: list[str], rows: list[dict],
+                note: str | None = None) -> None:
     """Replace the whole tab content with header + rows (never appends)."""
     values = [columns] + [[row[c] for c in columns] for row in rows]
+    if note:
+        values += [[""], [note]]
     try:
         ws = spreadsheet.worksheet(title)
     except Exception:
@@ -56,8 +63,11 @@ def rewrite_tab(spreadsheet, title: str, columns: list[str], rows: list[dict]) -
     ws.update(values, "A1", value_input_option="RAW")
 
 
-def push_tables(final: list[dict], daily: list[dict], sheet_id: str | None = None, spreadsheet=None) -> None:
+def push_tables(final: list[dict], daily: list[dict], dash: list[dict] | None = None,
+                sheet_id: str | None = None, spreadsheet=None) -> None:
     if spreadsheet is None:
         spreadsheet = open_spreadsheet(sheet_id or sheet_id_from_config())
     rewrite_tab(spreadsheet, TAB_SLOTS, SLOTS_FINAL_COLUMNS, final)
     rewrite_tab(spreadsheet, TAB_DAILY, DAILY_COLUMNS, daily)
+    if dash is not None:
+        rewrite_tab(spreadsheet, TAB_DASHBOARD, DASHBOARD_COLUMNS, dash, note=DASHBOARD_NOTE)

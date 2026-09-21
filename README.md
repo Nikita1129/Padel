@@ -3,7 +3,8 @@
 Colectează, la fiecare oră (06:30–23:59, ora Chișinăului), starea fiecărui slot de
 teren pentru azi și mâine de pe grilele publice Courtica, o păstrează brut în
 `data/raw/AAAA-LL.csv` (append-only, commit automat în repo) și publică două tabele
-derivate într-un Google Sheet: `slots_final` (ultima stare observată înainte de
+derivate într-un Google Sheet: `dashboard` (un rând per club: cât a vândut în toată
+perioada urmărită, doar zilele observate complet), `slots_final` (ultima stare observată înainte de
 începerea slotului + când a fost văzut prima dată rezervat) și `daily_occupancy`
 (ocupare pe zi și club, împărțită dimineață / după-amiază / seară, plus
 `revenue_estimate_mdl` = ore-teren rezervate × `price_per_hour` din config; e o

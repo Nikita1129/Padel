@@ -73,7 +73,7 @@ def test_build_tables_is_idempotent(tmp_path):
     first = build_tables(tmp_path)
     second = build_tables(tmp_path)
     assert first == second
-    final, daily = first
+    final, daily, dash = first
     assert [(r["club"], r["date"], r["booked_slots"], r["total_slots"]) for r in daily] == [
         ("Divi Padel Club", "2026-11-03", "1", "2"), ("Ursu Padel", "2026-11-03", "0", "1")]
 
@@ -82,3 +82,41 @@ def test_slot_hours_handles_midnight_end():
     from collector.derive import slot_hours
     assert slot_hours({"slot_start": "23:30", "slot_end": "00:00"}) == 0.5
     assert slot_hours({"slot_start": "07:00", "slot_end": "08:00"}) == 1.0
+
+
+def test_dashboard_only_counts_complete_days():
+    from collector.derive import DASHBOARD_COLUMNS, dashboard
+    final = [{"club": "Divi Padel Club", "court": f"c{c}", "slot_date": d, "slot_start": "19:00",
+              "slot_end": "20:00", "final_status": "booked", "last_observed_at": "",
+              "first_seen_booked_at": "", "observations": "1"} for d in ("2026-11-01", "2026-11-02") for c in (1, 2)]
+    daily = [
+        # complete days: 64 slots each
+        {"club": "Divi Padel Club", "date": "2026-11-01", "total_slots": "64", "booked_slots": "32",
+         "evening_slots": "24", "evening_booked": "18", "booked_hours": "32"},
+        {"club": "Divi Padel Club", "date": "2026-11-02", "total_slots": "64", "booked_slots": "16",
+         "evening_slots": "24", "evening_booked": "6", "booked_hours": "16"},
+        # partial day (collection started mid-day): must be ignored
+        {"club": "Divi Padel Club", "date": "2026-10-31", "total_slots": "20", "booked_slots": "20",
+         "evening_slots": "10", "evening_booked": "10", "booked_hours": "20"},
+    ]
+    rows = dashboard(daily, final, {"Divi Padel Club": 500})
+    assert len(rows) == 1 and list(rows[0]) == DASHBOARD_COLUMNS
+    d = rows[0]
+    assert (d["zile_complete"], d["prima_zi"], d["ultima_zi"]) == ("2", "2026-11-01", "2026-11-02")
+    assert (d["ore_rezervate"], d["ore_pe_zi"]) == ("48", "24.0")
+    assert (d["terenuri"], d["ore_pe_teren_pe_zi"]) == ("2", "12.0")
+    assert d["ocupare_pct"] == "37.5"          # 48 booked of 128 slots
+    assert d["ocupare_seara_pct"] == "50.0"    # 24 booked of 48 evening slots
+    assert (d["venit_estimat_mdl"], d["venit_estimat_pe_zi_mdl"]) == ("24000", "12000")
+
+
+def test_dashboard_without_price_leaves_revenue_empty():
+    from collector.derive import dashboard
+    final = [{"club": "X", "court": "c1", "slot_date": "2026-11-01", "slot_start": "19:00",
+              "slot_end": "20:00", "final_status": "booked", "last_observed_at": "",
+              "first_seen_booked_at": "", "observations": "1"}]
+    daily = [{"club": "X", "date": "2026-11-01", "total_slots": "10", "booked_slots": "5",
+              "evening_slots": "4", "evening_booked": "2", "booked_hours": "5"}]
+    d = dashboard(daily, final)[0]
+    assert d["venit_estimat_mdl"] == "" and d["pret_ora_presupus"] == ""
+    assert d["ore_rezervate"] == "5"

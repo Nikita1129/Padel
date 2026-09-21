@@ -158,12 +158,12 @@ def main(argv: list[str] | None = None) -> int:
     from .sheets import SheetsError, push_tables
 
     try:
-        final, daily = build_tables(Path(args.raw_dir), cfg.timezone)
-        push_tables(final, daily)
+        final, daily, dash = build_tables(Path(args.raw_dir), cfg.timezone)
+        push_tables(final, daily, dash)
     except Exception as exc:  # raw rows are already safe on disk; report and fail
         print(f"SHEETS PUSH FAILED (raw rows were appended and are kept): {exc!r}", file=sys.stderr)
         return 1
-    log(f"pushed slots_final ({len(final)} rows) and daily_occupancy ({len(daily)} rows)")
+    log(f"pushed slots_final ({len(final)}), daily_occupancy ({len(daily)}), dashboard ({len(dash)})")
     return 0
 
 

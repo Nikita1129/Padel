@@ -3,7 +3,7 @@ import json
 import pytest
 
 from collector import sheets
-from collector.derive import DAILY_COLUMNS, SLOTS_FINAL_COLUMNS
+from collector.derive import DAILY_COLUMNS, DASHBOARD_COLUMNS, SLOTS_FINAL_COLUMNS
 
 
 class FakeWorksheet:
@@ -31,12 +31,17 @@ class FakeSpreadsheet:
         return self.tabs[title]
 
 
-def test_push_rewrites_both_tabs_and_creates_missing_ones():
+def test_push_rewrites_all_tabs_and_creates_missing_ones():
     ss = FakeSpreadsheet(existing=["slots_final"])
     final = [{c: f"f-{c}" for c in SLOTS_FINAL_COLUMNS}]
     daily = [{c: f"d-{c}" for c in DAILY_COLUMNS}]
-    sheets.push_tables(final, daily, spreadsheet=ss)
-    assert set(ss.tabs) == {"slots_final", "daily_occupancy"}
+    dash = [{c: f"x-{c}" for c in DASHBOARD_COLUMNS}]
+    sheets.push_tables(final, daily, dash, spreadsheet=ss)
+    assert set(ss.tabs) == {"slots_final", "daily_occupancy", "dashboard"}
+    # the dashboard carries a plain-language caveat under the table
+    _, _, dash_values, _ = ss.tabs["dashboard"].calls[1]
+    assert dash_values[0] == DASHBOARD_COLUMNS
+    assert dash_values[-1][0].startswith("Venitul este o ESTIMARE")
     for title, cols, rows in (("slots_final", SLOTS_FINAL_COLUMNS, final), ("daily_occupancy", DAILY_COLUMNS, daily)):
         calls = ss.tabs[title].calls
         assert calls[0] == "clear"

@@ -1,5 +1,9 @@
 """Rebuild the derived tables from data/raw/ (idempotent).
 
+dashboard:        one row per club: how much it sold over the whole tracked period.
+                  Only "complete" days count, i.e. days where the full grid was
+                  observed before the day started, so clubs and days stay comparable.
+
 slots_final:      one row per club/court/date/slot with the last status observed
                   BEFORE the slot started, and when it was first seen booked.
 daily_occupancy:  per club and date: total/booked slots and occupancy %, overall
@@ -30,6 +34,10 @@ DAILY_COLUMNS = ["club", "date", "total_slots", "booked_slots", "occupancy_pct",
                  "afternoon_slots", "afternoon_booked", "afternoon_pct",
                  "evening_slots", "evening_booked", "evening_pct",
                  "booked_hours", "price_per_hour_assumed", "revenue_estimate_mdl"]
+DASHBOARD_COLUMNS = ["club", "terenuri", "prima_zi", "ultima_zi", "zile_complete",
+                     "ore_rezervate", "ore_pe_zi", "ore_pe_teren_pe_zi",
+                     "ocupare_pct", "ocupare_seara_pct",
+                     "pret_ora_presupus", "venit_estimat_mdl", "venit_estimat_pe_zi_mdl"]
 VALID_FINAL = {"free", "booked", "blocked", "unknown"}
 
 
@@ -118,12 +126,63 @@ def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None) -
     return out
 
 
+def dashboard(daily: list[dict], final: list[dict], prices: dict[str, float] | None = None) -> list[dict]:
+    """One row per club, aggregated over COMPLETE days only.
+
+    A day is complete when its slot count equals the club's usual full-day count
+    (the maximum seen for that club). Partial days - the first day of tracking, or
+    a day where collection started mid-day - would understate the club, so they are
+    excluded rather than averaged in.
+    """
+    prices = prices or {}
+    courts = {}
+    for row in final:
+        courts.setdefault(row["club"], set()).add(row["court"])
+
+    by_club: dict[str, list[dict]] = {}
+    for row in daily:
+        by_club.setdefault(row["club"], []).append(row)
+
+    out = []
+    for club in sorted(by_club):
+        rows = by_club[club]
+        full = max(int(r["total_slots"]) for r in rows)
+        complete = [r for r in rows if int(r["total_slots"]) == full]
+        if not complete:
+            continue
+        days = len(complete)
+        booked_h = sum(float(r["booked_hours"] or 0) for r in complete)
+        slots = sum(int(r["total_slots"]) for r in complete)
+        booked_slots = sum(int(r["booked_slots"]) for r in complete)
+        eve = sum(int(r["evening_slots"]) for r in complete)
+        eve_booked = sum(int(r["evening_booked"]) for r in complete)
+        price = prices.get(club)
+        n_courts = len(courts.get(club, ()))
+        out.append({
+            "club": club,
+            "terenuri": str(n_courts),
+            "prima_zi": min(r["date"] for r in complete),
+            "ultima_zi": max(r["date"] for r in complete),
+            "zile_complete": str(days),
+            "ore_rezervate": f"{booked_h:g}",
+            "ore_pe_zi": f"{booked_h / days:.1f}",
+            "ore_pe_teren_pe_zi": f"{booked_h / days / n_courts:.1f}" if n_courts else "",
+            "ocupare_pct": f"{100 * booked_slots / slots:.1f}" if slots else "",
+            "ocupare_seara_pct": f"{100 * eve_booked / eve:.1f}" if eve else "",
+            "pret_ora_presupus": f"{price:g}" if price is not None else "",
+            "venit_estimat_mdl": f"{round(booked_h * price):d}" if price is not None else "",
+            "venit_estimat_pe_zi_mdl": f"{round(booked_h * price / days):d}" if price is not None else "",
+        })
+    return out
+
+
 def build_tables(raw_dir: Path = RAW_DIR, tz_name: str = "Europe/Chisinau",
-                 config_path=DEFAULT_CONFIG) -> tuple[list[dict], list[dict]]:
+                 config_path=DEFAULT_CONFIG) -> tuple[list[dict], list[dict], list[dict]]:
     rows = read_all_rows(raw_dir)
     final = slots_final(rows, zoneinfo.ZoneInfo(tz_name))
     prices = {c.name: c.price_per_hour for c in load_config(config_path).clubs if c.price_per_hour is not None}
-    return final, daily_occupancy(final, prices)
+    daily = daily_occupancy(final, prices)
+    return final, daily, dashboard(daily, final, prices)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -132,9 +191,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--push", action="store_true", help="rewrite the slots_final and daily_occupancy tabs")
     args = ap.parse_args(argv)
 
-    final, daily = build_tables(Path(args.raw_dir))
-    print(f"slots_final: {len(final)} rows; daily_occupancy: {len(daily)} rows", file=sys.stderr)
-    for row in daily[-10:]:
+    final, daily, dash = build_tables(Path(args.raw_dir))
+    print(f"slots_final: {len(final)} rows; daily_occupancy: {len(daily)} rows; "
+          f"dashboard: {len(dash)} rows", file=sys.stderr)
+    for row in dash:
         print("  " + "  ".join(f"{k}={v}" for k, v in row.items()), file=sys.stderr)
     if not args.push:
         return 0
@@ -143,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
     if not final:
         print("nothing to push: slots_final is empty", file=sys.stderr)
         return 1
-    push_tables(final, daily)
+    push_tables(final, daily, dash)
     print("pushed both tabs", file=sys.stderr)
     return 0
 

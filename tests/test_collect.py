@@ -108,15 +108,16 @@ def test_main_real_run_appends_then_pushes(cfg, monkeypatch, tmp_path):
 
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory(ALL_FIXTURES))
     pushed = {}
-    monkeypatch.setattr(sheets, "push_tables", lambda final, daily: pushed.update(final=final, daily=daily))
+    monkeypatch.setattr(sheets, "push_tables", lambda final, daily, dash: pushed.update(final=final, daily=daily, dash=dash))
     assert run.main(["--raw-dir", str(tmp_path)]) == 0
     rows = read_all_rows(tmp_path)
     assert len(rows) == 2 * N_ALL
-    assert set(pushed) == {"final", "daily"}
+    assert set(pushed) == {"final", "daily", "dash"}
+    assert {r["club"] for r in pushed["dash"]} <= {"Divi Padel Club", "Ursu Padel", "Primus Padel Costesti", "PadelPoint"}
     assert len(pushed["daily"]) >= 2  # both clubs, tomorrow's date at least
 
     # push failure keeps the raw rows and exits 1
-    def boom(final, daily):
+    def boom(final, daily, dash=None):
         raise sheets.SheetsError("quota")
     monkeypatch.setattr(sheets, "push_tables", boom)
     assert run.main(["--raw-dir", str(tmp_path)]) == 1
