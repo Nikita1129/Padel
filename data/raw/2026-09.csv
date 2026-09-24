@@ -181047,3 +181047,899 @@ snapshot_ts,club,court,slot_date,slot_start,slot_end,status,raw_status,price,boo
 2026-09-24T06:41:50+03:00,PadelPoint,Court 9,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
 2026-09-24T06:41:50+03:00,PadelPoint,Court 9,2026-09-25,22:00,22:30,free,Alege;disabled=false,,,browser
 2026-09-24T06:41:50+03:00,PadelPoint,Court 9,2026-09-25,22:30,23:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,07:00,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,09:00,10:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,10:00,11:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,11:00,12:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,12:00,13:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,16:00,17:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,17:00,18:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,21:00,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-24,22:00,23:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,07:00,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,09:00,10:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,10:00,11:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,11:00,12:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,12:00,13:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,16:00,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,17:00,18:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,21:00,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-24,22:00,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,07:00,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,10:00,11:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,11:00,12:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,12:00,13:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,16:00,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,17:00,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,21:00,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-24,22:00,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,07:00,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,10:00,11:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,11:00,12:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,12:00,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,16:00,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,17:00,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,18:00,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,21:00,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-24,22:00,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,07:00,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,10:00,11:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,11:00,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,12:00,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,13:00,14:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,14:00,15:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,16:00,17:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,17:00,18:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,21:00,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№1 - Blue,2026-09-25,22:00,23:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,07:00,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,10:00,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,11:00,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,12:00,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,16:00,17:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,17:00,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,21:00,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№2 - Green,2026-09-25,22:00,23:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,07:00,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,10:00,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,11:00,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,12:00,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,14:00,15:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,15:00,16:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,16:00,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,17:00,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,20:00,21:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,21:00,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№3 - Red,2026-09-25,22:00,23:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,07:00,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,08:00,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,09:00,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,10:00,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,11:00,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,12:00,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,13:00,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,14:00,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,15:00,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,16:00,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,17:00,18:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,18:00,19:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,19:00,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,20:00,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,21:00,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Divi Padel Club,№4 - Black,2026-09-25,22:00,23:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,19:00,19:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,19:30,20:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,20:00,20:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,20:30,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,21:00,21:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-24,21:30,22:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,19:00,19:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,19:30,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,20:00,20:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,20:30,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,21:00,21:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Ursu Padel,Padel (exterior),2026-09-25,21:30,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,07:00,07:30,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,07:30,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,19:00,19:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,19:30,20:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,20:00,20:30,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,20:30,21:00,booked,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,21:00,21:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,21:30,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,22:00,22:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,22:30,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,23:00,23:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-24,23:30,00:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,07:00,07:30,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,07:30,08:00,past,available=false;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,19:00,19:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,19:30,20:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,20:00,20:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,20:30,21:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,21:00,21:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,21:30,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,22:00,22:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,22:30,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,23:00,23:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-24,23:30,00:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,07:00,07:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,07:30,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,19:00,19:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,19:30,20:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,20:00,20:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,20:30,21:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,21:00,21:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,21:30,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,22:00,22:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,22:30,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,23:00,23:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 1 - exterior,2026-09-25,23:30,00:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,07:00,07:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,07:30,08:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,08:00,08:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,08:30,09:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,09:00,09:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,09:30,10:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,10:00,10:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,10:30,11:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,11:00,11:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,11:30,12:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,12:00,12:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,12:30,13:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,13:00,13:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,13:30,14:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,14:00,14:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,14:30,15:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,15:00,15:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,15:30,16:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,16:00,16:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,16:30,17:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,17:00,17:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,17:30,18:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,18:00,18:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,18:30,19:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,19:00,19:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,19:30,20:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,20:00,20:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,20:30,21:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,21:00,21:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,21:30,22:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,22:00,22:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,22:30,23:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,23:00,23:30,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,Primus Padel Costesti,Padel 2 - exterior,2026-09-25,23:30,00:00,free,available=true;pending=false,,,html
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,08:00,08:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,08:30,09:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,09:00,09:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,09:30,10:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,22:00,22:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-24,22:30,23:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,15:00,15:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,11:30,12:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,08:00,08:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,08:30,09:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,09:00,09:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,09:30,10:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,10:00,10:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,10:30,11:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,11:30,12:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,15:00,15:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,19:00,19:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,22:00,22:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-24,22:30,23:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,14:30,15:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,22:00,22:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-24,22:30,23:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,07:00,07:30,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,07:30,08:00,past,Expirat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-24,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 1,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 2,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 3,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,20:00,20:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,20:30,21:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 4,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,14:30,15:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,15:00,15:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 5,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,14:00,14:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,14:30,15:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,16:00,16:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,16:30,17:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 6,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,10:00,10:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,10:30,11:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,11:30,12:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,15:00,15:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,18:30,19:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,22:00,22:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 7,2026-09-25,22:30,23:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,10:00,10:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,10:30,11:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,11:00,11:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,11:30,12:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,12:00,12:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,12:30,13:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,13:00,13:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,13:30,14:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,15:00,15:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,15:30,16:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,17:00,17:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,17:30,18:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,18:00,18:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,18:30,19:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,19:00,19:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,19:30,20:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,22:00,22:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 8,2026-09-25,22:30,23:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,07:00,07:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,07:30,08:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,08:00,08:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,08:30,09:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,09:00,09:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,09:30,10:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,10:00,10:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,10:30,11:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,11:00,11:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,11:30,12:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,12:00,12:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,12:30,13:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,13:00,13:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,13:30,14:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,14:00,14:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,14:30,15:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,15:00,15:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,15:30,16:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,16:00,16:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,16:30,17:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,17:00,17:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,17:30,18:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,18:00,18:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,18:30,19:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,19:00,19:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,19:30,20:00,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,20:00,20:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,20:30,21:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,21:00,21:30,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,21:30,22:00,booked,Ocupat;disabled=true,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,22:00,22:30,free,Alege;disabled=false,,,browser
+2026-09-24T07:41:34+03:00,PadelPoint,Court 9,2026-09-25,22:30,23:00,free,Alege;disabled=false,,,browser
