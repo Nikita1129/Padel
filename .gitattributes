@@ -1,0 +1,8 @@
+# The raw snapshots are append-only: every run adds rows at the end and never
+# rewrites earlier ones. When two runs overlap (GitHub's cron fires late and
+# races a manual dispatch), a normal rebase reports a content conflict at the
+# end of the file and the second run dies, losing that snapshot. The union
+# driver keeps both sides' rows instead, which is exactly the right merge for
+# append-only data: derive.py groups and sorts by snapshot_ts, so row order in
+# the file does not matter and a duplicated row is absorbed.
+data/raw/*.csv merge=union

@@ -90,5 +90,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "data: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
-          git pull --rebase origin "${{ github.ref_name }}"
-          git push origin "HEAD:${{ github.ref_name }}"
+          # Another run may push between our rebase and our push, so retry.
+          # data/raw/*.csv uses the union merge driver (see .gitattributes),
+          # so overlapping runs keep both sets of rows instead of conflicting.
+          pushed=0
+          for attempt in 1 2 3; do
+            if git pull --rebase origin "${{ github.ref_name }}" \
+               && git push origin "HEAD:${{ github.ref_name }}"; then
+              pushed=1
+              break
+            fi
+            echo "push attempt $attempt failed; retrying"
+            git rebase --abort || true
+            sleep $((attempt * 5))
+          done
+          if [ "$pushed" != "1" ]; then
+            echo "ERROR: could not push the snapshot after 3 attempts"
+            exit 1
+          fi
