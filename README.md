@@ -15,6 +15,10 @@ Cluburile Courtica (Divi, Ursu, Primus) se citesc dintr-un GET simplu, grila vin
 HTML. PadelPoint are altă platformă: un browser headless deschide fiecare teren prin
 click pe hartă (`collector/padelpoint.py`), de aceea rularea durează 1–2 minute.
 
+Cron-ul din GitHub Actions e best-effort (s-a observat că pornește o dată la 4–8
+ore, nu orar), deci cadența reală se ține cu un cron extern care apelează
+`workflow_dispatch`: vezi [`docs/cron-independent.md`](docs/cron-independent.md).
+
 ## Cum adaugi un club
 
 1. Deschide grila clubului pe courtica.md și copiază URL-ul (fără `&date=`).
