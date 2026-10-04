@@ -108,3 +108,11 @@ jobs:
             echo "ERROR: could not push the snapshot after 3 attempts"
             exit 1
           fi
+
+      # Gap alarm, deliberately the last step so it can never block a snapshot.
+      # Only on `schedule`: GitHub's cron is a poor pacemaker but it does fire a
+      # few times a day, which is enough to notice that the hourly dispatches
+      # have stopped. See tools/check_freshness.py.
+      - name: Alarm on stale data
+        if: always() && github.event_name == 'schedule'
+        run: python tools/check_freshness.py --max-age-hours 6

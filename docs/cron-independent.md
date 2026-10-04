@@ -23,24 +23,40 @@ folosește driverul de merge `union` (`.gitattributes`), deci rulările
 suprapuse se pun la coadă și nu pierd rânduri. **Nu scoate cron-ul din
 GitHub Actions** — e backup gratuit.
 
-## Pasul 1 — PAT fine-grained
+## Pasul 1 — tokenul
+
+Aici e singura acțiune care cere un om: GitHub nu permite crearea de tokenuri
+prin API, deci pasul acesta se face o dată, din browser. Alege una din două.
+
+### Varianta recomandată: classic PAT, fără expirare
 
 GitHub → Settings → Developer settings → Personal access tokens →
-**Fine-grained tokens** → Generate new token.
+**Tokens (classic)** → Generate new token (classic).
 
 | Câmp | Valoare |
 |---|---|
-| Token name | `padel-collect-dispatch` |
-| Expiration | 1 an (notează data în calendar — la expirare colectarea se oprește) |
-| Resource owner | `Nikita1129` |
-| Repository access | **Only select repositories** → `Nikita1129/Padel` |
-| Permissions → Repository | **Actions: Read and write** (doar aceasta) |
+| Note | `padel-collect-dispatch` |
+| Expiration | **No expiration** |
+| Scopes | doar **`public_repo`** |
 
-Nimic altceva. Tokenul acesta poate doar să pornească workflow-uri în acest
-repo: nu poate citi alte repo-uri, nu poate face push, nu poate schimba setări.
+De ce asta și nu varianta fine-grained: un token care expiră e o pană
+programată. Ziua în care expiră, colectarea se oprește în liniște și tu afli
+peste o săptămână. `public_repo` e mai larg decât strictul necesar (poate
+scrie în repo-urile tale publice), dar acest repo e public, nu conține
+secrete în cod, iar secretul de Actions
+(`GOOGLE_SERVICE_ACCOUNT_JSON`) nu poate fi citit de niciun PAT. Compromisul
+merită: scoate din ecuație singurul mod de eșec programat.
 
-Copiază valoarea o singură dată (`github_pat_…`). Nu o pune în repo, în chat,
-în `.env` comis sau într-un screenshot.
+### Varianta cu scope minim: fine-grained
+
+Dacă preferi permisiuni minime și accepți să-l reînnoiești manual:
+**Fine-grained tokens** → Generate new token, `Only select repositories` →
+`Nikita1129/Padel`, Permissions → Repository → **Actions: Read and write**,
+nimic altceva. Maximul de expirare e 1 an — pune-ți reminder în calendar, și
+contează pe alarma din Pasul 4 ca plasă de siguranță.
+
+Copiază valoarea o singură dată. Nu o pune în repo, în chat, în `.env` comis
+sau într-un screenshot.
 
 ## Pasul 2 — jobul de cron
 
@@ -105,6 +121,31 @@ credențialul sesiunii — orice token, chiar inventat, întoarce `204` de aici.
 Deci verificarea de la Pasul 3 trebuie făcută de pe cron-job.org sau de pe
 server, nu din chat.
 
+## Pasul 4 — alarma pentru tăcere (deja activă)
+
+`collect.yml` are un ultim pas, `Alarm on stale data`, care rulează doar la
+declanșările de tip `schedule` și execută `tools/check_freshness.py`: dacă cel
+mai recent `snapshot_ts` din `data/raw/` e mai vechi de 6 ore, rularea iese
+non-zero și GitHub îți trimite email de workflow failure.
+
+Cum acoperă exact gaura din septembrie: dacă atât cron-ul extern cât și rutina
+din sesiune se opresc, cron-ul propriu al GitHub tot pornește de câteva ori pe
+zi — suficient ca pasul acesta să observe vechimea și să țipe. O verificare
+dinăuntrul workflow-ului nu poate detecta „n-a rulat absolut nimic" (dacă nu
+pornește nicio rulare, nu rulează nici verificarea), dar cron-ul GitHub e
+destul de prezent ca să servească drept puls.
+
+Verificarea e sărită în primele 6 ore ale ferestrei (până la 12:30 local) și
+după închiderea ei, altfel ar da alarme false pe datele legitime de peste
+noapte. Deci tăcerea totală e prinsă zilnic, cel târziu la 12:30.
+
+Asigură-te că ai notificările de workflow failure active:
+GitHub → Settings → Notifications → Actions → bifat **Email**. Fără ele,
+alarma scrie într-un jurnal pe care nu-l citește nimeni.
+
+După ce cron-ul extern e confirmat că bate orar, poți strânge pragul de la 6 la
+3 ore în `.github/workflows/collect.yml`.
+
 ## Ce înseamnă fiecare input
 
 | Input | Valoare | Efect |
@@ -133,8 +174,12 @@ public, deci minutele de Actions sunt gratuite.
 
 ## Ce rămâne neacoperit
 
-Nimic din cele de mai sus nu te anunță dacă *colectorul* eșuează în liniște
-(ex. Courtica își schimbă grila și runul iese non-zero). GitHub trimite email
-la workflow failure pe `main` — ține-l activ. Un watchdog care verifică „am
-primit cel puțin un snapshot în ultimele 3 ore" ar fi pasul următor; încă nu
-există.
+Alarma din Pasul 4 prinde tăcerea, nu și degradarea parțială: dacă un singur
+club din patru începe să dea zero sloturi (Courtica își schimbă grila doar
+pentru el), restul datelor rămân proaspete și nimic nu se plânge. Un check per
+club ar fi pasul următor; încă nu există.
+
+Nici cron-job.org nu are SLA: dacă *el* cade, singurul lucru care rămâne în
+picioare e cron-ul leneș al GitHub, iar alarma din Pasul 4 te prinde în
+maximum o zi. Două surse independente de declanșare sunt mai bune ca una, dar
+nu fac sistemul redundant la propriu.
