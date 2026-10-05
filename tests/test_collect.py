@@ -47,7 +47,8 @@ def _fake_padelpoint(monkeypatch):
 
 def test_collect_two_clubs_two_days(cfg, now, monkeypatch):
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory(ALL_FIXTURES))
-    rows = collect(list(cfg.clubs), [DAY, DAY + dt.timedelta(days=1)], now, log=lambda *_: None)
+    rows, failures = collect(list(cfg.clubs), [DAY, DAY + dt.timedelta(days=1)], now, log=lambda *_: None)
+    assert failures == []
     assert len(rows) == 2 * N_ALL
     assert all(list(r) == RAW_COLUMNS for r in rows)
     assert {r["snapshot_ts"] for r in rows} == {"2026-09-20T14:30:00+03:00"}
@@ -64,21 +65,61 @@ def test_collect_saves_html(cfg, now, monkeypatch, tmp_path):
     assert (tmp_path / "ursu-padel" / "2026-09-20_html.html").exists()
 
 
-def test_one_blocked_club_fails_whole_run(cfg, now, monkeypatch):
+def test_one_blocked_club_keeps_the_others(cfg, now, monkeypatch):
+    """The whole point of the change: Ursu being down must not cost the other three."""
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({**ALL_FIXTURES, "ursu-padel": None}))
-    with pytest.raises(FetchError, match="simulated block"):
-        collect(list(cfg.clubs), [DAY], now, log=lambda *_: None)
+    rows, failures = collect(list(cfg.clubs), [DAY], now, log=lambda *_: None)
+    assert len(failures) == 1 and "simulated block" in failures[0] and failures[0].startswith("ursu-padel")
+    assert {r["club"] for r in rows} == {"Divi Padel Club", "Primus Padel Costesti", "PadelPoint"}
+    assert len(rows) == N_ALL - 28
 
 
-def test_bad_page_fails_whole_run(cfg, now, monkeypatch):
+def test_bad_page_is_one_failure_not_a_lost_snapshot(cfg, now, monkeypatch):
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({**ALL_FIXTURES, "divi-padel": read_fixture("bad", "unknown-status.html")}))
-    with pytest.raises(ParseError):
+    rows, failures = collect(list(cfg.clubs), [DAY], now, log=lambda *_: None)
+    assert len(failures) == 1 and failures[0].startswith("divi-padel") and "ParseError" in failures[0]
+    assert "Divi Padel Club" not in {r["club"] for r in rows}
+    assert len(rows) == N_ALL - 64
+
+
+def test_every_club_down_writes_nothing(cfg, now, monkeypatch):
+    monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({k: None for k in ALL_FIXTURES}))
+    monkeypatch.setattr(run, "collect_padelpoint", lambda *a, **k: (_ for _ in ()).throw(FetchError("pp down")))
+    with pytest.raises(CollectError, match="zero rows collected"):
         collect(list(cfg.clubs), [DAY], now, log=lambda *_: None)
 
 
-def test_budget_exceeded_aborts(cfg, now, monkeypatch):
+def test_failure_on_one_date_keeps_the_other(cfg, now, monkeypatch):
+    """A club that fails for tomorrow still contributes today."""
+    calls = []
+
+    def flaky(club, url, throttle, browser, log=print):
+        calls.append(url)
+        if club.slug == "divi-padel" and url.endswith("2026-09-21"):
+            raise FetchError("divi-padel: tomorrow timed out")
+        return ALL_FIXTURES[club.slug], "html"
+
+    monkeypatch.setattr(run, "fetch_grid", flaky)
+    rows, failures = collect(list(cfg.clubs), [DAY, DAY + dt.timedelta(days=1)], now, log=lambda *_: None)
+    assert len(failures) == 1 and "2026-09-21" in failures[0]
+    divi = {r["slot_date"] for r in rows if r["club"] == "Divi Padel Club"}
+    assert divi == {"2026-09-20"}
+    assert len(rows) == 2 * N_ALL - 64
+
+
+def test_budget_exceeded_keeps_what_was_collected(cfg, now, monkeypatch):
+    """Over budget stops further fetching but no longer throws away the rows already in hand."""
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory(ALL_FIXTURES))
-    with pytest.raises(CollectError, match="budget"):
+    budget = iter([0.0, 0.0, 999.0, 999.0, 999.0, 999.0])  # trips on the second club
+    monkeypatch.setattr(run.time, "monotonic", lambda: next(budget, 999.0))
+    rows, failures = collect(list(cfg.clubs), [DAY], now, log=lambda *_: None, budget_s=1.0)
+    assert len(failures) == 1 and "budget" in failures[0]
+    assert rows and {r["club"] for r in rows} == {"Divi Padel Club"}
+
+
+def test_budget_exceeded_before_anything_still_raises(cfg, now, monkeypatch):
+    monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory(ALL_FIXTURES))
+    with pytest.raises(CollectError, match="zero rows collected"):
         collect(list(cfg.clubs), [DAY], now, log=lambda *_: None, budget_s=-1)
 
 
@@ -89,7 +130,15 @@ def test_main_dry_run_exit_codes(cfg, monkeypatch, capsys):
     assert out.out.splitlines()[0] == "\t".join(RAW_COLUMNS)
     assert "nothing written" in out.err
 
+    # one club down: rows still printed, exit 1, failure named
+    monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({**ALL_FIXTURES, "ursu-padel": None}))
+    assert run.main(["--dry-run"]) == 1
+    err = capsys.readouterr().err
+    assert "PARTIAL RUN" in err and "ursu-padel" in err
+
+    # everything down: nothing to write at all
     monkeypatch.setattr(run, "fetch_grid", fake_fetch_factory({k: None for k in ALL_FIXTURES}))
+    monkeypatch.setattr(run, "collect_padelpoint", lambda *a, **k: (_ for _ in ()).throw(FetchError("pp down")))
     assert run.main(["--dry-run"]) == 1
     assert "RUN FAILED, nothing written" in capsys.readouterr().err
 

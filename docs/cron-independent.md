@@ -174,10 +174,12 @@ public, deci minutele de Actions sunt gratuite.
 
 ## Ce rămâne neacoperit
 
-Alarma din Pasul 4 prinde tăcerea, nu și degradarea parțială: dacă un singur
-club din patru începe să dea zero sloturi (Courtica își schimbă grila doar
-pentru el), restul datelor rămân proaspete și nimic nu se plânge. Un check per
-club ar fi pasul următor; încă nu există.
+Alarma din Pasul 4 prinde tăcerea, nu și degradarea parțială. Un club care
+*eșuează* e acum vizibil — colectorul scrie ce a reușit, iese 1 și primești
+emailul de workflow failure cu numele clubului. Dar un club care răspunde
+normal și raportează sincer zero sloturi (grilă schimbată, club închis) arată
+ca o zi goală legitimă și nu declanșează nimic. Un check per club pe numărul de
+sloturi ar prinde și asta; încă nu există.
 
 Nici cron-job.org nu are SLA: dacă *el* cade, singurul lucru care rămâne în
 picioare e cron-ul leneș al GitHub, iar alarma din Pasul 4 te prinde în
