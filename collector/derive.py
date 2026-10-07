@@ -1,8 +1,9 @@
 """Rebuild the derived tables from data/raw/ (idempotent).
 
 dashboard:        one row per club: how much it sold over the whole tracked period.
-                  Only "complete" days count, i.e. days where the full grid was
-                  observed before the day started, so clubs and days stay comparable.
+                  Only days that are OVER and were fully observed count, so clubs
+                  and days stay comparable; today and tomorrow are still filling up
+                  and would drag every club down.
 
 slots_final:      one row per club/court/date/slot with the last status observed
                   BEFORE the slot started, and when it was first seen booked.
@@ -126,13 +127,23 @@ def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None) -
     return out
 
 
-def dashboard(daily: list[dict], final: list[dict], prices: dict[str, float] | None = None) -> list[dict]:
-    """One row per club, aggregated over COMPLETE days only.
+def dashboard(daily: list[dict], final: list[dict], today: dt.date,
+              prices: dict[str, float] | None = None) -> list[dict]:
+    """One row per club, aggregated over FINISHED and fully observed days only.
 
-    A day is complete when its slot count equals the club's usual full-day count
-    (the maximum seen for that club). Partial days - the first day of tracking, or
-    a day where collection started mid-day - would understate the club, so they are
-    excluded rather than averaged in.
+    Two filters, and both are needed:
+
+    - the day must be over (slot_date < today). Today and tomorrow have a full slot
+      count but their bookings have not arrived yet, so including them drags
+      occupancy down. The size of the error depends on how many finished days they
+      are averaged against: over the 6 observed days of October 2026 it was 44.0%
+      vs 38.2%, and over the whole 24-day history 1-3 points per club. It is always
+      downward, and it never goes away as long as the two days are counted.
+    - the day must have been fully observed, i.e. its slot count equals the club's
+      usual full-day count (the maximum seen across its finished days). A day where
+      collection started late would understate the club.
+
+    `today` is the local date in the configured timezone, not UTC.
     """
     prices = prices or {}
     courts = {}
@@ -141,6 +152,8 @@ def dashboard(daily: list[dict], final: list[dict], prices: dict[str, float] | N
 
     by_club: dict[str, list[dict]] = {}
     for row in daily:
+        if dt.date.fromisoformat(row["date"]) >= today:
+            continue  # not finished yet: bookings for it are still coming in
         by_club.setdefault(row["club"], []).append(row)
 
     out = []
@@ -178,11 +191,13 @@ def dashboard(daily: list[dict], final: list[dict], prices: dict[str, float] | N
 
 def build_tables(raw_dir: Path = RAW_DIR, tz_name: str = "Europe/Chisinau",
                  config_path=DEFAULT_CONFIG) -> tuple[list[dict], list[dict], list[dict]]:
+    tz = zoneinfo.ZoneInfo(tz_name)
     rows = read_all_rows(raw_dir)
-    final = slots_final(rows, zoneinfo.ZoneInfo(tz_name))
+    final = slots_final(rows, tz)
     prices = {c.name: c.price_per_hour for c in load_config(config_path).clubs if c.price_per_hour is not None}
     daily = daily_occupancy(final, prices)
-    return final, daily, dashboard(daily, final, prices)
+    today = dt.datetime.now(tz).date()
+    return final, daily, dashboard(daily, final, today, prices)
 
 
 def main(argv: list[str] | None = None) -> int:

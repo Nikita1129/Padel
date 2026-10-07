@@ -1,3 +1,4 @@
+import datetime as dt
 import zoneinfo
 
 from collector.derive import DAILY_COLUMNS, SLOTS_FINAL_COLUMNS, build_tables, daily_occupancy, period, slots_final
@@ -99,7 +100,7 @@ def test_dashboard_only_counts_complete_days():
         {"club": "Divi Padel Club", "date": "2026-10-31", "total_slots": "20", "booked_slots": "20",
          "evening_slots": "10", "evening_booked": "10", "booked_hours": "20"},
     ]
-    rows = dashboard(daily, final, {"Divi Padel Club": 500})
+    rows = dashboard(daily, final, dt.date(2026, 11, 3), {"Divi Padel Club": 500})
     assert len(rows) == 1 and list(rows[0]) == DASHBOARD_COLUMNS
     d = rows[0]
     assert (d["zile_complete"], d["prima_zi"], d["ultima_zi"]) == ("2", "2026-11-01", "2026-11-02")
@@ -117,6 +118,38 @@ def test_dashboard_without_price_leaves_revenue_empty():
               "first_seen_booked_at": "", "observations": "1"}]
     daily = [{"club": "X", "date": "2026-11-01", "total_slots": "10", "booked_slots": "5",
               "evening_slots": "4", "evening_booked": "2", "booked_hours": "5"}]
-    d = dashboard(daily, final)[0]
+    d = dashboard(daily, final, dt.date(2026, 11, 2))[0]
     assert d["venit_estimat_mdl"] == "" and d["pret_ora_presupus"] == ""
     assert d["ore_rezervate"] == "5"
+
+
+def test_dashboard_excludes_today_and_tomorrow():
+    """Days still filling up have a full slot count but not their final bookings.
+
+    Without this filter the in-progress days were averaged in and pulled every
+    club's occupancy down (~6 points on real October data).
+    """
+    from collector.derive import dashboard
+    def day(d, booked):
+        return {"club": "Divi Padel Club", "date": d, "total_slots": "64", "booked_slots": str(booked),
+                "evening_slots": "24", "evening_booked": "12", "booked_hours": str(booked)}
+    final = [{"club": "Divi Padel Club", "court": "c1", "slot_date": "2026-11-01", "slot_start": "19:00",
+              "slot_end": "20:00", "final_status": "booked", "last_observed_at": "",
+              "first_seen_booked_at": "", "observations": "1"}]
+    daily = [day("2026-11-01", 32), day("2026-11-02", 32),
+             day("2026-11-03", 20),   # today: half elapsed
+             day("2026-11-04", 4)]    # tomorrow: barely booked yet
+    d = dashboard(daily, final, dt.date(2026, 11, 3))[0]
+    assert (d["zile_complete"], d["ultima_zi"]) == ("2", "2026-11-02")
+    assert d["ocupare_pct"] == "50.0"          # 64 of 128, the two finished days only
+    assert d["ore_pe_zi"] == "32.0"
+
+
+def test_dashboard_skips_a_club_with_no_finished_day():
+    from collector.derive import dashboard
+    final = [{"club": "X", "court": "c1", "slot_date": "2026-11-03", "slot_start": "19:00",
+              "slot_end": "20:00", "final_status": "booked", "last_observed_at": "",
+              "first_seen_booked_at": "", "observations": "1"}]
+    daily = [{"club": "X", "date": "2026-11-03", "total_slots": "10", "booked_slots": "5",
+              "evening_slots": "4", "evening_booked": "2", "booked_hours": "5"}]
+    assert dashboard(daily, final, dt.date(2026, 11, 3)) == []

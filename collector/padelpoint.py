@@ -15,6 +15,7 @@ import re
 from pathlib import Path
 
 from .config import Club
+from .fetch import FetchError
 from .parse import ParseError, Slot, build_slots
 
 SLOT_TEXT_RE = re.compile(r"^(\d{1,2}:\d{2})\s*\n?\s*(.*)$", re.S)
@@ -23,6 +24,14 @@ WAIT_AFTER_LOAD_MS = 6_000
 WAIT_AFTER_DATE_MS = 2_500
 WAIT_AFTER_CLICK_MS = 1_100
 MAX_CLICK_LEVELS = 7
+DATE_INPUT = "input[type=date]"
+# The page is what we wait for, not silence on the wire: `networkidle` needs 500 ms
+# with no request at all, which a page that polls or loads analytics may never reach.
+# Two runs were lost that way (2026-10-04, 2026-10-05) on a page that had in fact
+# loaded. Wait for the date input instead - the first thing the collector touches.
+NAV_TIMEOUT_MS = 45_000
+DATE_INPUT_TIMEOUT_MS = 30_000
+LOAD_ATTEMPTS = 2
 
 JS_HAS_SLOTS = """() => [...document.querySelectorAll('button')]
     .some(b => /^\\d{1,2}:\\d{2}/.test((b.innerText || '').trim()))"""
@@ -85,13 +94,27 @@ def _wait(page, ms: int) -> None:
     page.wait_for_timeout(ms)
 
 
+def open_booking_page(page, club: Club, log=print) -> None:
+    """Load the booking page and wait until the date input exists. Retries once."""
+    last: Exception | None = None
+    for attempt in range(1, LOAD_ATTEMPTS + 1):
+        try:
+            page.goto(club.url, wait_until="domcontentloaded", timeout=NAV_TIMEOUT_MS)
+            page.wait_for_selector(DATE_INPUT, timeout=DATE_INPUT_TIMEOUT_MS)
+            return
+        except Exception as exc:  # playwright errors are not importable without playwright
+            last = exc
+            log(f"[{club.slug}] load attempt {attempt}/{LOAD_ATTEMPTS} failed: {exc.__class__.__name__}: {exc}")
+    raise FetchError(f"{club.slug}: {club.url} did not load after {LOAD_ATTEMPTS} attempts: {last}")
+
+
 def collect_padelpoint(club: Club, slot_date: dt.date, now: dt.datetime, browser, save_dir: Path | None = None,
                        log=print) -> list[Slot]:
     """Drive the booking page for one day and return its slots (or raise)."""
     page = browser.new_page()
     try:
-        page.goto(club.url, wait_until="networkidle", timeout=60_000)
-        _wait(page, WAIT_AFTER_LOAD_MS)
+        open_booking_page(page, club, log=log)
+        _wait(page, WAIT_AFTER_LOAD_MS)  # the map needs to finish rendering, not just the input
         value = page.evaluate(JS_SET_DATE, slot_date.isoformat())
         if value is None:
             raise ParseError(f"{club.slug} {slot_date}: date input not found on {club.url}")

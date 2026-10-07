@@ -15,6 +15,10 @@ Cluburile Courtica (Divi, Ursu, Primus) se citesc dintr-un GET simplu, grila vin
 HTML. PadelPoint are altă platformă: un browser headless deschide fiecare teren prin
 click pe hartă (`collector/padelpoint.py`), de aceea rularea durează 1–2 minute.
 
+Cron-ul din GitHub Actions e best-effort (s-a observat că pornește o dată la 4–8
+ore, nu orar), deci cadența reală se ține cu un cron extern care apelează
+`workflow_dispatch`: vezi [`docs/cron-independent.md`](docs/cron-independent.md).
+
 ## Cum adaugi un club
 
 1. Deschide grila clubului pe courtica.md și copiază URL-ul (fără `&date=`).
@@ -50,10 +54,15 @@ Fără acces la Sheet: `python -m collector.derive` arată ultimele rânduri din
 
 ## Ce faci când o rulare eșuează
 
-O rulare eșuată nu scrie nimic. Nu apar rânduri goale sau parțiale.
+Un club care eșuează nu mai costă snapshot-ul celorlalte: ce s-a colectat se scrie,
+clubul căzut lipsește din acel snapshot, iar rularea iese 1 cu `PARTIAL RUN` în log
+(deci primești emailul de workflow failure). Un rând scris e întotdeauna complet;
+nu apar rânduri goale sau parțiale. Doar o rulare care n-a colectat absolut nimic
+nu scrie nimic.
 
-1. GitHub → Actions → `collect` → rularea roșie → pasul **Collect**. Prima linie cu
-   `RUN FAILED` spune cauza:
+1. GitHub → Actions → `collect` → rularea roșie → pasul **Collect**. Liniile `FAILED:`
+   (și rezumatul `PARTIAL RUN`, sau `RUN FAILED` dacă n-a rămas nimic) spun care club
+   și ce cauză:
    - `no grid cells` / `HTTP 403` / `browser fetch failed`: Courtica a blocat sau a
      schimbat pagina. Pornește o rulare manuală cu `commit_html` bifat; HTML-ul ajunge
      în `fixtures/real/` și se poate compara cu `fixtures/real/*` mai vechi.
@@ -69,7 +78,10 @@ O rulare eșuată nu scrie nimic. Nu apar rânduri goale sau parțiale.
    afișează; debifat = scrie și publică. `ignore_window` bifat = rulează și în afara
    ferestrei orare.
 4. O oră lipsă nu strică nimic: `slots_final` folosește ultima observație dinaintea
-   startului, oricare ar fi ea. Zilele fără nicio observație nu apar deloc.
+   startului, oricare ar fi ea. Zilele fără nicio observație nu apar deloc. La fel și
+   un club care lipsește dintr-un snapshot: pierzi o observație, nu slotul.
+5. `dashboard` numără doar zilele **încheiate** și complet observate. Azi și mâine au
+   grila completă dar rezervările încă nu au venit, deci ar trage ocuparea în jos.
 
 Teste (fără rețea): `pytest`. Verificare de paritate cu datele vechi Apify:
 `python tools/parity_check.py`. Import unic al exportului vechi:
