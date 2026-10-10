@@ -2,14 +2,29 @@
 
 The page is a single-page app: the day is chosen in an <input type="date">,
 each court is opened by clicking its label (C1..C9) on a map, and the slots are
-<button> elements whose text is "HH:MM\\nAlege" (free), "HH:MM\\nOcupat"
-(booked) or "HH:MM\\nExpirat" (already started: unlike Courtica, this site
-does tell past from booked). The "23:00\\nSfarsit" button is the closing
-marker, not a slot.
+<button> elements. Two button layouts have been seen and both are parsed:
+
+    "07:00-08:00\\nIndisponibil"  not bookable: booked OR already started
+    "07:00-08:00\\n500 L"         free, and the price the site asks for it
+    "07:00\\nAlege"               free             (layout used until 2026-10-10)
+    "07:00\\nOcupat"              booked           (idem)
+    "07:00\\nExpirat"             already started  (idem)
+
+On 2026-10-10 the site moved from half-hour slots labelled with a word to
+full-hour slots labelled with the interval plus either "Indisponibil" or the
+price; `slot_minutes` for padelpoint in config/clubs.yaml followed (30 -> 60).
+Until this was fixed every run raised instead of mislabelling, so the club is
+missing from the snapshots of that day rather than wrong in them.
+In the new layout the label no longer tells booked from free, so for a price
+label the button's `disabled` flag decides; an unrecognised label still raises.
+When the button carries an interval, its length is checked against
+`slot_minutes`, so the next such change names itself in the error.
+The "23:00\\nSfarsit" button is the closing marker, not a slot.
 Everything needs a browser; nothing is server-rendered.
 """
 from __future__ import annotations
 
+import dataclasses
 import datetime as dt
 import re
 from pathlib import Path
@@ -18,8 +33,14 @@ from .config import Club
 from .fetch import FetchError
 from .parse import ParseError, Slot, build_slots
 
-SLOT_TEXT_RE = re.compile(r"^(\d{1,2}:\d{2})\s*\n?\s*(.*)$", re.S)
-STATE_BY_TEXT = {"alege": "free", "ocupat": "booked", "expirat": "past"}
+SLOT_TEXT_RE = re.compile(
+    r"^(?P<start>\d{1,2}:\d{2})\s*(?:[-\u2013\u2014]\s*(?P<end>\d{1,2}:\d{2}))?\s*\n?\s*(?P<state>.*)$",
+    re.S,
+)
+# A label that is a price means the slot is on sale; "500 L", "1 200 lei", "500,00 MDL".
+PRICE_RE = re.compile(r"^(\d[\d\s\u00a0]*(?:[.,]\d+)?)\s*(?:L|LEI|MDL)\.?$", re.I)
+SPACES_RE = re.compile(r"[\s\u00a0]")
+STATE_BY_TEXT = {"alege": "free", "ocupat": "booked", "expirat": "past", "indisponibil": "booked"}
 WAIT_AFTER_LOAD_MS = 6_000
 WAIT_AFTER_DATE_MS = 2_500
 WAIT_AFTER_CLICK_MS = 1_100
@@ -69,25 +90,51 @@ JS_READ = """() => {
 }"""
 
 
+def _pad(time_txt: str) -> str:
+    return "0" + time_txt if len(time_txt) == 4 else time_txt
+
+
+def _minutes(time_txt: str) -> int:
+    hours, minutes = time_txt.split(":")
+    return int(hours) * 60 + int(minutes)
+
+
 def slots_from_buttons(club: Club, courts: dict[str, list[tuple[str, bool]]], slot_date: dt.date,
                        now: dt.datetime) -> list[Slot]:
     """Pure part: court name -> [(button text, disabled)] into validated slots."""
     normalised: dict[str, list[tuple[str, str, str]]] = {}
+    prices: dict[tuple[str, str], str] = {}
     for court, buttons in courts.items():
         out = []
         for text, disabled in buttons:
             m = SLOT_TEXT_RE.match(text)
             if not m:
                 raise ParseError(f"{club.slug} {slot_date} {court}: unexpected button text {text!r}")
-            time_txt, state_txt = m.group(1), m.group(2).strip()
+            time_txt, end_txt, state_txt = _pad(m.group("start")), m.group("end"), m.group("state").strip()
             if state_txt.lower().startswith("sf"):
                 continue  # "Sfarsit": closing marker, not a slot
-            if len(time_txt) == 4:
-                time_txt = "0" + time_txt
-            status = STATE_BY_TEXT.get(state_txt.lower(), "unknown")
+            if end_txt is not None:
+                length = (_minutes(_pad(end_txt)) - _minutes(time_txt)) % (24 * 60)
+                if length != club.slot_minutes:
+                    raise ParseError(
+                        f"{club.slug} {slot_date} {court}: button says {time_txt}-{_pad(end_txt)} "
+                        f"({length} min), config says {club.slot_minutes}"
+                    )
+            money = PRICE_RE.match(state_txt)
+            if money:
+                # New layout: the label is the price, so only `disabled` tells free from taken.
+                prices[(court, time_txt)] = SPACES_RE.sub("", money.group(1)).replace(",", ".")
+                status = "booked" if disabled else "free"
+            else:
+                status = STATE_BY_TEXT.get(state_txt.lower(), "unknown")
             out.append((time_txt, status, f"{state_txt};disabled={str(disabled).lower()}"))
         normalised[court] = out
-    return build_slots(club, normalised, slot_date, now)
+    slots = build_slots(club, normalised, slot_date, now)
+    if not prices:
+        return slots
+    # The site only prices what it still sells, so booked slots keep an empty price.
+    return [dataclasses.replace(s, price=prices.get((s.court, s.slot_start.strftime("%H:%M")), s.price))
+            for s in slots]
 
 
 def _wait(page, ms: int) -> None:
