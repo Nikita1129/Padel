@@ -7,8 +7,11 @@ derivate într-un Google Sheet: `dashboard` (un rând per club: cât a vândut �
 perioada urmărită, doar zilele observate complet), `slots_final` (ultima stare observată înainte de
 începerea slotului + când a fost văzut prima dată rezervat) și `daily_occupancy`
 (ocupare pe zi și club, împărțită dimineață / după-amiază / seară, plus
-`revenue_estimate_mdl` = ore-teren rezervate × `price_per_hour` din config; e o
-estimare la preț de listă presupus, iar pe Courtica „rezervat" include și blocările).
+`revenue_estimate_mdl` = ore-teren rezervate × prețul orei). Prețul e cel afișat de
+site pentru slotul respectiv, apoi cel afișat pentru aceeași oră la același club, iar
+unde site-ul nu arată niciun preț se folosește `price_per_hour` din config —
+`site_priced_pct` spune cât din ore a fost evaluat cu preț real. Rămâne o estimare,
+iar pe Courtica „rezervat" include și blocările.
 
 Rulează pe GitHub Actions (`.github/workflows/collect.yml`), fără servicii plătite.
 Cluburile Courtica (Divi, Ursu, Primus) se citesc dintr-un GET simplu, grila vine în
@@ -82,6 +85,14 @@ nu scrie nimic.
    un club care lipsește dintr-un snapshot: pierzi o observație, nu slotul.
 5. `dashboard` numără doar zilele **încheiate** și complet observate. Azi și mâine au
    grila completă dar rezervările încă nu au venit, deci ar trage ocuparea în jos.
+   „Complet observată" se judecă per pas de grilă, nu per club: când PadelPoint a
+   trecut de la sloturi de 30 min la o oră (2026-10-10), ziua plină a scăzut de la 288
+   la 144 de sloturi, iar un singur maxim pe club ar fi exclus silențios toate zilele
+   de după schimbare. Ocuparea din `dashboard` se măsoară în ore-teren, nu în sloturi,
+   din același motiv.
+6. Alarma de prospețime (`tools/check_freshness.py`, ultimul pas din workflow) verifică
+   fiecare club separat: un club fără nicio înregistrare la mai puțin de 6 h de ultima
+   colectare reușită face rularea să iasă 1, chiar dacă celelalte cluburi sunt la zi.
 
 Teste (fără rețea): `pytest`. Verificare de paritate cu datele vechi Apify:
 `python tools/parity_check.py`. Import unic al exportului vechi:
