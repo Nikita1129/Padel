@@ -50,6 +50,9 @@ clubs:
     platform: padelpoint
     url: https://padelpoint.md/booking/ro/
     expected_courts: 9
-    slot_minutes: 30
+    # The site switched from half-hour to full-hour slots on 2026-10-10 (16 buttons
+    # per court, labelled "07:00-08:00"). Raw rows before that date are 30 min long;
+    # the derived tables read each row's own start/end, so both lengths add up.
+    slot_minutes: 60
     fetch: browser
     price_per_hour: 500

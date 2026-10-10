@@ -10,7 +10,7 @@ def test_default_config_clubs(cfg):
     assert (divi.expected_courts, divi.slot_minutes, divi.platform) == (4, 60, "courtica")
     assert (ursu.expected_courts, ursu.slot_minutes) == (1, 30)
     assert (primus.expected_courts, primus.slot_minutes, primus.fetch) == (2, 30, "auto")
-    assert (pp.platform, pp.fetch, pp.expected_courts, pp.slot_minutes) == ("padelpoint", "browser", 9, 30)
+    assert (pp.platform, pp.fetch, pp.expected_courts, pp.slot_minutes) == ("padelpoint", "browser", 9, 60)
     assert cfg.run_budget_seconds == 240
     assert [c.price_per_hour for c in cfg.clubs] == [500, 250, 300, 500]
 

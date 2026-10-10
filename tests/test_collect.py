@@ -12,8 +12,10 @@ from tests.conftest import read_fixture
 DAY = dt.date(2026, 9, 20)
 
 
-PP_BUTTONS = [(f"{h:02d}:{m:02d}\nAlege" if (h + m) % 3 else f"{h:02d}:{m:02d}\nOcupat", (h + m) % 3 == 0)
-              for h in range(7, 23) for m in (0, 30)] + [("23:00\nSfarsit", True)]
+# The layout padelpoint.md has served since 2026-10-10: full hours, interval plus
+# either a price (free) or "Indisponibil" (booked or already started).
+PP_BUTTONS = [(f"{h:02d}:00\u2013{h + 1:02d}:00\n" + ("500 L" if h % 3 else "Indisponibil"), h % 3 == 0)
+              for h in range(7, 23)]
 
 
 def fake_fetch_factory(mapping):
@@ -37,7 +39,7 @@ ALL_FIXTURES = {
     "primus-padel-costesti": read_fixture("primus-padel-costesti", "synthetic-2026-09-20.html"),
 }
 N_COURTICA = 64 + 28 + 68
-N_ALL = N_COURTICA + 9 * 32
+N_ALL = N_COURTICA + 9 * 16
 
 
 @pytest.fixture(autouse=True)
