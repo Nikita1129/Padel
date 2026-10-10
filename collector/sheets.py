@@ -18,9 +18,12 @@ ENV_CREDENTIALS = "GOOGLE_SERVICE_ACCOUNT_JSON"
 TAB_SLOTS = "slots_final"
 TAB_DAILY = "daily_occupancy"
 TAB_DASHBOARD = "dashboard"
-DASHBOARD_NOTE = ("Venitul este o ESTIMARE: ore-teren rezervate x pretul presupus din config/clubs.yaml. "
-                  "Site-urile nu publica preturi. Pe Courtica \"rezervat\" include si blocarile "
-                  "(mentenanta, antrenamente, turnee). Se numara doar zilele observate complet.")
+DASHBOARD_NOTE = ("Venitul este o ESTIMARE: ore-teren rezervate x pretul orei. Pretul este cel afisat de site "
+                  "pentru slotul respectiv, apoi cel afisat pentru aceeasi ora la acelasi club, iar unde site-ul "
+                  "nu arata niciun pret se foloseste presupunerea din config/clubs.yaml; coloana site_priced_pct "
+                  "din daily_occupancy arata cat din ore a fost evaluat cu pret real. Pe Courtica \"rezervat\" "
+                  "include si blocarile (mentenanta, antrenamente, turnee). Ocuparea se masoara in ore-teren, nu "
+                  "in sloturi. Se numara doar zilele observate complet.")
 
 
 class SheetsError(RuntimeError):

@@ -174,12 +174,22 @@ public, deci minutele de Actions sunt gratuite.
 
 ## Ce rămâne neacoperit
 
-Alarma din Pasul 4 prinde tăcerea, nu și degradarea parțială. Un club care
-*eșuează* e acum vizibil — colectorul scrie ce a reușit, iese 1 și primești
-emailul de workflow failure cu numele clubului. Dar un club care răspunde
-normal și raportează sincer zero sloturi (grilă schimbată, club închis) arată
-ca o zi goală legitimă și nu declanșează nimic. Un check per club pe numărul de
-sloturi ar prinde și asta; încă nu există.
+Alarma din Pasul 4 prinde acum și degradarea parțială, nu doar tăcerea.
+`tools/check_freshness.py` compară fiecare club din config cu cel mai recent
+snapshot al oricărui club: dacă un club n-are nicio înregistrare la mai puțin
+de `--max-age-hours` de ultima colectare reușită, rularea iese 1 și emailul
+numește clubul. Comparația e între cluburi, nu cu ceasul, deci funcționează la
+orice oră — noaptea toate cluburile sunt la fel de vechi și nu se declanșează
+nimic; acolo rămâne verificarea de vârstă absolută, care are nevoie de
+fereastra de colectare. Asta e exact gaura care a ținut PadelPoint invizibil pe
+2026-10-10: trei cluburi scrise la fiecare rulare, al patrulea lipsă, iar
+alarma scria „fresh".
+
+Ce rămâne în afară: un club care răspunde normal, e colectat la fiecare rulare,
+dar raportează sincer mai puține terenuri sau sloturi decât de obicei. Validarea
+din `build_slots` prinde abaterile de la `expected_courts`/`slot_minutes` (de
+acolo au venit eșecurile de pe 2026-10-10), dar un club care pur și simplu își
+scurtează ziua arată ca o zi mai liniștită.
 
 Nici cron-job.org nu are SLA: dacă *el* cade, singurul lucru care rămâne în
 picioare e cron-ul leneș al GitHub, iar alarma din Pasul 4 te prinde în
