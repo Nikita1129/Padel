@@ -23,7 +23,11 @@ DASHBOARD_NOTE = ("Venitul este o ESTIMARE: ore-teren rezervate x pretul orei. P
                   "nu arata niciun pret se foloseste presupunerea din config/clubs.yaml; coloana site_priced_pct "
                   "din daily_occupancy arata cat din ore a fost evaluat cu pret real. Pe Courtica \"rezervat\" "
                   "include si blocarile (mentenanta, antrenamente, turnee). Ocuparea se masoara in ore-teren, nu "
-                  "in sloturi. Se numara doar zilele observate complet.")
+                  "in sloturi. Se numara doar zilele incheiate si observate complet: ziua intra daca orele-teren "
+                  "oferite ajung la cat ofera clubul de obicei in jurul acelei date, deci o schimbare a orarului "
+                  "nu invalideaza zilele dinainte. Nu intra nici zilele in care site-ul a eliberat rezervarile pe "
+                  "care le arata cu o zi inainte (coloana grid_released din daily_occupancy): acolo nu se mai "
+                  "stie ce s-a vandut. zile_incomplete si zile_eliberate arata cate zile au fost scoase.")
 
 
 class SheetsError(RuntimeError):

@@ -115,4 +115,5 @@ jobs:
       # have stopped. See tools/check_freshness.py.
       - name: Alarm on stale data
         if: always() && github.event_name == 'schedule'
-        run: python tools/check_freshness.py --max-age-hours 6
+        # Run as a module, not a path: the release check imports collector.derive.
+        run: python -m tools.check_freshness --max-age-hours 6

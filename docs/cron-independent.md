@@ -126,7 +126,9 @@ server, nu din chat.
 `collect.yml` are un ultim pas, `Alarm on stale data`, care rulează doar la
 declanșările de tip `schedule` și execută `tools/check_freshness.py`: dacă cel
 mai recent `snapshot_ts` din `data/raw/` e mai vechi de 6 ore, rularea iese
-non-zero și GitHub îți trimite email de workflow failure.
+non-zero și GitHub îți trimite email de workflow failure. (Pasul rulează
+`python -m tools.check_freshness`, nu calea fișierului: verificarea de
+`grid_released` importă `collector.derive`.)
 
 Cum acoperă exact gaura din septembrie: dacă atât cron-ul extern cât și rutina
 din sesiune se opresc, cron-ul propriu al GitHub tot pornește de câteva ori pe
@@ -185,11 +187,22 @@ fereastra de colectare. Asta e exact gaura care a ținut PadelPoint invizibil pe
 2026-10-10: trei cluburi scrise la fiecare rulare, al patrulea lipsă, iar
 alarma scria „fresh".
 
+Acoperă acum și al treilea fel de pierdere: rândurile vin, dar nu mai înseamnă
+nimic. O grilă care eliberează rezervări pe care le arătase deja lasă clubul să
+arate gol, nu stricat. Zilele acelea sunt marcate `grid_released` în
+`daily_occupancy`, scoase din `dashboard`, iar pasul de alarmă iese 1 cât timp
+una e în ultimele 3 zile (`--release-lookback-days`, 0 = taie verificarea).
+Asta costă un email per rulare programată până se lămurește cauza, dar
+alternativa e un club care îngheață fără să spună nimeni nimic — exact felul de
+gaură care nu se vede decât peste săptămâni.
+
 Ce rămâne în afară: un club care răspunde normal, e colectat la fiecare rulare,
 dar raportează sincer mai puține terenuri sau sloturi decât de obicei. Validarea
 din `build_slots` prinde abaterile de la `expected_courts`/`slot_minutes` (de
 acolo au venit eșecurile de pe 2026-10-10), dar un club care pur și simplu își
-scurtează ziua arată ca o zi mai liniștită.
+scurtează ziua arată ca o zi mai liniștită — în `dashboard` ziua aceea cade sub
+orele obișnuite și iese din socoteală ca „incompletă", deci nu strică mediile,
+însă nimeni nu e avertizat.
 
 Nici cron-job.org nu are SLA: dacă *el* cade, singurul lucru care rămâne în
 picioare e cron-ul leneș al GitHub, iar alarma din Pasul 4 te prinde în

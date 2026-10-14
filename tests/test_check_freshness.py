@@ -64,3 +64,30 @@ def test_main_exits_1_when_a_club_is_missing_from_recent_rows(tmp_path, monkeypa
     err = capsys.readouterr().err
     assert "PadelPoint: 48.0 h behind" in err
     assert "Ursu Padel: no rows at all" in err
+
+
+def rel(club, date, pct="90", flagged="1"):
+    return {"club": club, "date": date, "released_pct": pct, "grid_released": flagged}
+
+
+def test_a_recently_released_day_is_reported():
+    daily = [rel("Divi Padel Club", "2026-11-02"), rel("Divi Padel Club", "2026-11-03", pct="100")]
+    out = cf.released_days(daily, dt.date(2026, 11, 3), 3)
+    assert out == [("Divi Padel Club", "2026-11-03", "100"), ("Divi Padel Club", "2026-11-02", "90")]
+
+
+def test_an_old_released_day_is_not_reported():
+    """The alarm is about a problem that is still happening, not about history."""
+    daily = [rel("Divi Padel Club", "2026-10-20")]
+    assert cf.released_days(daily, dt.date(2026, 11, 3), 3) == []
+
+
+def test_a_future_day_is_not_reported():
+    """Tomorrow's grid has not been emptied yet; it is still filling up."""
+    daily = [rel("Divi Padel Club", "2026-11-04")]
+    assert cf.released_days(daily, dt.date(2026, 11, 3), 3) == []
+
+
+def test_days_the_grid_did_not_release_are_not_reported():
+    daily = [rel("PadelPoint", "2026-11-03", pct="25", flagged="")]
+    assert cf.released_days(daily, dt.date(2026, 11, 3), 3) == []
