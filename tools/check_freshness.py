@@ -16,7 +16,17 @@ young and a club-wide hole hides behind it: that is exactly what happened when
 padelpoint.md changed its buttons on 2026-10-10 and this script kept printing
 "fresh" while the biggest club was missing from every snapshot of the day.
 
-Exit codes: 0 = data is fresh or no check is due, 1 = stale or missing.
+A second, different kind of hole: rows keep arriving but they stop meaning
+anything. A booking grid that gives back bookings it had already shown leaves a
+club looking empty instead of looking broken - Divi's Courtica page did this
+from 2026-10-12 and closed 2026-10-13 with 0 of 64 slots booked. The derived
+table marks those days (grid_released, see collector/derive.py) and the
+dashboard drops them, which is correct but also invisible: the club just stops
+moving. So this script fails while such a day is recent, which costs an email
+per scheduled run until the cause is found or the check is turned off with
+--release-lookback-days 0.
+
+Exit codes: 0 = data is fresh or no check is due, 1 = stale, missing or released.
 """
 
 from __future__ import annotations
@@ -26,6 +36,7 @@ import csv
 import datetime as dt
 import glob
 import os
+import pathlib
 import sys
 from zoneinfo import ZoneInfo
 
@@ -96,6 +107,23 @@ def stale_clubs(per_club: dict[str, dt.datetime], clubs: list[str], reference: d
     return out
 
 
+def released_days(daily: list[dict], today: dt.date, lookback_days: int) -> list[tuple[str, str, str]]:
+    """Recent club-days whose grid gave back the bookings it had shown, newest first.
+
+    `daily` is the daily_occupancy table. Today is included: the grid emptying
+    out is visible long before the day is over, and waiting a day only delays
+    the alarm.
+    """
+    out = []
+    for row in daily:
+        if not row.get("grid_released"):
+            continue
+        age = (today - dt.date.fromisoformat(row["date"])).days
+        if 0 <= age <= lookback_days:
+            out.append((row["club"], row["date"], row.get("released_pct", "")))
+    return sorted(out, key=lambda t: t[1], reverse=True)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument(
@@ -106,6 +134,12 @@ def main() -> int:
     )
     ap.add_argument("--raw-dir", default="data/raw")
     ap.add_argument("--config", default=CONFIG)
+    ap.add_argument(
+        "--release-lookback-days",
+        type=int,
+        default=3,
+        help="fail when a day this recent had its bookings released (0 disables the check)",
+    )
     args = ap.parse_args()
 
     tz, win_start, win_end, clubs = load_config(args.config)
@@ -132,6 +166,31 @@ def main() -> int:
                 "  1. recent runs of collect.yml - a club/date failure is reported as PARTIAL RUN\n"
                 "  2. whether its page still parses: python -m collector.run --dry-run --club <slug>\n"
                 "  3. whether the club is still in config/clubs.yaml under this exact name",
+                file=sys.stderr,
+            )
+            return 1
+
+    if args.release_lookback_days > 0:
+        # Imported here so a stale-data failure is still reported if deriving breaks.
+        # Like the comparison above, this does not depend on the wall clock, so it
+        # runs before the window guard: a grid that gives bookings back is just as
+        # visible at 02:00 as at noon.
+        from collector.derive import build_tables
+
+        _, daily, _ = build_tables(pathlib.Path(args.raw_dir), str(tz))
+        released = released_days(daily, now.date(), args.release_lookback_days)
+        if released:
+            detail = "\n".join(f"  - {club} on {date}: {pct}% of the previous evening's booked hours went free"
+                               for club, date, pct in released)
+            print(
+                f"ERROR: {len(released)} club-day(s) in the last {args.release_lookback_days} days "
+                f"had their bookings released by the site:\n{detail}\n"
+                "Those days are dropped from the dashboard, so the club looks frozen rather than broken.\n"
+                "Check, in this order:\n"
+                "  1. open the club's booking page and compare it with data/raw for the same day\n"
+                "  2. whether the club moved its bookings to another system (then the page is no longer evidence)\n"
+                "  3. collector/derive.py RELEASE_* if normal churn has simply grown past the threshold\n"
+                "Silence it meanwhile with --release-lookback-days 0.",
                 file=sys.stderr,
             )
             return 1
@@ -171,6 +230,7 @@ def main() -> int:
     behind = ", ".join(f"{club} {(newest - per_club[club]).total_seconds() / 3600:.1f} h behind"
                        for club in clubs if club in per_club)
     print(f"fresh: newest snapshot {newest:%Y-%m-%d %H:%M %Z}, {age_h:.1f} h old; per club: {behind}")
+
     return 0
 
 

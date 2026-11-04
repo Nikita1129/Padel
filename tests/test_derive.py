@@ -243,3 +243,113 @@ def test_dashboard_counts_days_of_both_grid_steps():
     assert d["ore_rezervate"] == "270"
     assert d["ocupare_pct"] == "46.9"            # 270 of 576 court-hours
     assert (d["pret_ora_presupus"], d["pret_ora_efectiv"]) == ("500", "400")
+
+
+def test_status_prev_day_is_the_last_status_before_the_slots_own_day():
+    rows = [
+        obs("2026-11-01T18:00:00+02:00", "free"),      # two days out
+        obs("2026-11-02T20:00:00+02:00", "booked"),    # the evening before: this one
+        obs("2026-11-03T09:00:00+02:00", "free"),      # released on the day itself
+        obs("2026-11-03T18:30:00+02:00", "free"),
+    ]
+    f = slots_final(rows, TZ)[0]
+    assert f["status_prev_day"] == "booked"
+    assert f["final_status"] == "free"
+
+
+def test_status_prev_day_is_empty_when_the_slot_was_only_seen_on_its_own_day():
+    f = slots_final([obs("2026-11-03T09:00:00+02:00", "booked")], TZ)[0]
+    assert f["status_prev_day"] == ""
+
+
+def _day(club, date, specs):
+    """specs: (slot_start, final_status, status_prev_day) per one-hour slot on one court."""
+    return [{"club": club, "court": "c1", "slot_date": date, "slot_start": s,
+             "slot_end": f"{int(s[:2]) + 1:02d}:00", "final_status": fin, "last_observed_at": "",
+             "first_seen_booked_at": "", "observations": "1", "price": "",
+             "status_prev_day": prev} for s, fin, prev in specs]
+
+
+def test_a_grid_that_releases_most_of_last_evenings_bookings_is_flagged():
+    """Divi's Courtica page did this from 2026-10-12: 6 of 7 booked hours went free."""
+    specs = [(f"{h:02d}:00", "free", "booked") for h in range(14, 20)]       # 6 h released
+    specs.append(("20:00", "booked", "booked"))                             # 1 h kept
+    d = daily_occupancy(_day("Divi Padel Club", "2026-11-03", specs))[0]
+    assert (d["booked_hours_prev_day"], d["released_hours"], d["released_pct"]) == ("7", "6", "86")
+    assert d["grid_released"] == "1"
+    assert d["booked_hours"] == "1"
+
+
+def test_ordinary_cancellation_churn_is_not_flagged():
+    """10-30 % of the previous evening's hours going free is normal at every club."""
+    specs = [(f"{h:02d}:00", "booked", "booked") for h in range(14, 20)]    # 6 h kept
+    specs.append(("20:00", "free", "booked"))                               # 1 h released
+    d = daily_occupancy(_day("Divi Padel Club", "2026-11-03", specs))[0]
+    assert d["released_pct"] == "14" and d["grid_released"] == ""
+
+
+def test_a_day_too_small_to_judge_is_not_flagged():
+    """One cancellation out of two booked hours is not evidence of a broken grid."""
+    specs = [("19:00", "free", "booked"), ("20:00", "free", "booked")]
+    d = daily_occupancy(_day("Ursu Padel", "2026-11-03", specs))[0]
+    assert d["released_pct"] == "100" and d["grid_released"] == ""
+
+
+def test_released_pct_is_empty_when_nothing_was_seen_a_day_ahead():
+    d = daily_occupancy(_day("X", "2026-11-03", [("19:00", "booked", "")]))[0]
+    assert (d["booked_hours_prev_day"], d["released_pct"], d["grid_released"]) == ("0", "", "")
+
+
+def test_usual_hours_follows_a_lasting_change_without_invalidating_history():
+    """padelpoint.md added a 23:00 slot on 2026-10-13: 144 -> 153 court-hours a day.
+
+    Judging every day against the club's maximum made the whole week before the
+    change "incomplete" and cut 105 booked hours out of it.
+    """
+    from collector.derive import usual_hours
+    offered = {f"2026-10-{d:02d}": 144.0 for d in range(1, 13)}
+    offered.update({f"2026-10-{d:02d}": 153.0 for d in range(13, 25)})
+    usual = usual_hours(offered)
+    assert usual["2026-10-06"] == 144.0          # judged by its own neighbours
+    assert usual["2026-10-24"] == 153.0
+    assert all(offered[d] >= usual[d] for d in offered)   # no day is called incomplete
+
+
+def test_dashboard_keeps_the_days_before_a_club_added_opening_hours():
+    from collector.derive import dashboard
+
+    def day(date, hours, booked_h):
+        return {"club": "PadelPoint", "date": date, "total_slots": f"{int(hours)}",
+                "booked_slots": "0", "evening_slots": "0", "evening_booked": "0",
+                "booked_hours": str(booked_h), "total_hours": str(hours),
+                "revenue_estimate_mdl": str(int(booked_h * 500))}
+
+    final = [{"club": "PadelPoint", "court": f"c{c}", "slot_date": "2026-10-11", "slot_start": "19:00",
+              "slot_end": "20:00", "final_status": "booked", "last_observed_at": "",
+              "first_seen_booked_at": "", "observations": "1", "price": "",
+              "status_prev_day": ""} for c in range(1, 10)]
+    daily = [day(f"2026-10-{d:02d}", 144, 60) for d in range(5, 13)]   # before the extra hour
+    daily += [day(f"2026-10-{d:02d}", 153, 70) for d in range(13, 15)]  # after
+    d = dashboard(daily, final, dt.date(2026, 10, 15), {"PadelPoint": 500})[0]
+    assert d["zile_complete"] == "10" and d["zile_incomplete"] == "0"
+    assert d["ore_rezervate"] == "620"          # 8 x 60 + 2 x 70
+
+
+def test_dashboard_drops_a_day_the_grid_released_and_counts_it():
+    from collector.derive import dashboard
+
+    def day(date, booked_h, released=""):
+        return {"club": "Divi Padel Club", "date": date, "total_slots": "64", "booked_slots": "0",
+                "evening_slots": "0", "evening_booked": "0", "booked_hours": str(booked_h),
+                "total_hours": "64", "revenue_estimate_mdl": str(int(booked_h * 500)),
+                "grid_released": released}
+
+    final = [{"club": "Divi Padel Club", "court": "c1", "slot_date": "2026-11-01",
+              "slot_start": "19:00", "slot_end": "20:00", "final_status": "booked",
+              "last_observed_at": "", "first_seen_booked_at": "", "observations": "1",
+              "price": "", "status_prev_day": ""}]
+    daily = [day("2026-11-01", 38), day("2026-11-02", 36), day("2026-11-03", 0, released="1")]
+    d = dashboard(daily, final, dt.date(2026, 11, 4), {"Divi Padel Club": 500})[0]
+    assert d["zile_complete"] == "2" and d["zile_eliberate"] == "1"
+    assert d["ultima_zi"] == "2026-11-02"        # the released day never reaches the table
+    assert d["ore_rezervate"] == "74"

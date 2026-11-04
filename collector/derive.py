@@ -6,7 +6,8 @@ dashboard:        one row per club: how much it sold over the whole tracked peri
                   and would drag every club down.
 
 slots_final:      one row per club/court/date/slot with the last status observed
-                  BEFORE the slot started, and when it was first seen booked.
+                  BEFORE the slot started, when it was first seen booked, and the
+                  status the site showed the day BEFORE the slot (status_prev_day).
 daily_occupancy:  per club and date: total/booked slots and occupancy %, overall
                   and split by slot start: morning < 12:00, afternoon 12:00-16:59,
                   evening >= 17:00; plus booked and total court-hours and
@@ -16,6 +17,9 @@ daily_occupancy:  per club and date: total/booked slots and occupancy %, overall
                   price_per_hour assumption from config; site_priced_pct says how
                   much of it came from the site. Still an ESTIMATE: "booked" on
                   Courtica also covers blocked/training slots.
+                  released_hours / released_pct compare the day with the state the
+                  site showed the evening before, and grid_released marks a day the
+                  site emptied out (see RELEASE_* below); the dashboard drops those.
 
     python -m collector.derive            # print table sizes and a preview
     python -m collector.derive --push     # also rewrite both tabs in the Google Sheet
@@ -33,7 +37,7 @@ from .storage import RAW_DIR, read_all_rows
 
 SLOTS_FINAL_COLUMNS = ["club", "court", "slot_date", "slot_start", "slot_end",
                        "final_status", "last_observed_at", "first_seen_booked_at", "observations",
-                       "price"]
+                       "price", "status_prev_day"]
 DAILY_COLUMNS = ["club", "date", "total_slots", "booked_slots", "occupancy_pct",
                  "morning_slots", "morning_booked", "morning_pct",
                  "afternoon_slots", "afternoon_booked", "afternoon_pct",
@@ -41,13 +45,29 @@ DAILY_COLUMNS = ["club", "date", "total_slots", "booked_slots", "occupancy_pct",
                  # The new columns are appended, not inserted: a formula or chart built
                  # on the sheet keeps pointing at the same column it did before.
                  "booked_hours", "price_per_hour_assumed", "revenue_estimate_mdl",
-                 "total_hours", "price_per_hour_effective", "site_priced_pct"]
+                 "total_hours", "price_per_hour_effective", "site_priced_pct",
+                 "booked_hours_prev_day", "released_hours", "released_pct", "grid_released"]
 DASHBOARD_COLUMNS = ["club", "terenuri", "prima_zi", "ultima_zi", "zile_complete",
                      "ore_rezervate", "ore_pe_zi", "ore_pe_teren_pe_zi",
                      "ocupare_pct", "ocupare_seara_pct",
                      "pret_ora_presupus", "venit_estimat_mdl", "venit_estimat_pe_zi_mdl",
-                     "pret_ora_efectiv"]
+                     "pret_ora_efectiv", "zile_incomplete", "zile_eliberate"]
 VALID_FINAL = {"free", "booked", "blocked", "unknown"}
+
+# A booking grid that drops bookings it had already shown stops being evidence of
+# what was sold. Divi's Courtica page started doing this on 2026-10-12: slots that
+# had been booked for a day went free during the morning and stayed free, so
+# 2026-10-13 closed with 0 of 64 slots booked at a club that runs near 60%.
+# A day is called released when MOST of what the site showed as booked the evening
+# before was gone by the time the slots started. Both bounds matter: churn of
+# 10-30% of booked hours is normal at every club (measured over 99 club-days), and
+# a club with only a couple of booked hours flips ratios on a single cancellation.
+# "Survived" means still booked at the start: a slot the grid later marks blocked
+# is as unknowable as one it marks free, so it counts as released too.
+RELEASE_MIN_HOURS = 5.0   # ignore days too small to judge
+RELEASE_KEPT_MIN = 0.5    # flag when less than half of last evening's hours survive
+# Window used to decide what a full day looks like for a club (see dashboard()).
+COMPLETE_WINDOW_DAYS = 7
 
 
 def period(slot_start: str) -> str:
@@ -66,8 +86,8 @@ def slots_final(rows: list[dict], tz: zoneinfo.ZoneInfo) -> list[dict]:
         snap = dt.datetime.fromisoformat(row["snapshot_ts"])
         if snap.tzinfo is None:
             raise ValueError(f"naive snapshot_ts in raw data: {row['snapshot_ts']}")
-        start = dt.datetime.combine(dt.date.fromisoformat(row["slot_date"]),
-                                    dt.time.fromisoformat(row["slot_start"]), tzinfo=tz)
+        slot_day = dt.date.fromisoformat(row["slot_date"])
+        start = dt.datetime.combine(slot_day, dt.time.fromisoformat(row["slot_start"]), tzinfo=tz)
         if snap >= start:
             continue  # observed after the slot started: not evidence of the final state
         if row["status"] not in VALID_FINAL:
@@ -79,6 +99,10 @@ def slots_final(rows: list[dict], tz: zoneinfo.ZoneInfo) -> list[dict]:
         obs = sorted(groups[key], key=lambda t: t[0])
         last_snap, last = obs[-1]
         booked = [s for s, r in obs if r["status"] == "booked"]
+        # What the site said while the slot was still a day away. Compared with
+        # final_status this shows a grid that gives bookings back (see RELEASE_*).
+        midnight = dt.datetime.combine(dt.date.fromisoformat(key[2]), dt.time(0, 0), tzinfo=tz)
+        before = [r for s, r in obs if s < midnight]
         # The page prices only what it still sells, so a slot that ends up booked
         # carries the price from the last observation that still offered it.
         priced = [r.get("price", "").strip() for s, r in obs if (r.get("price") or "").strip()]
@@ -90,6 +114,7 @@ def slots_final(rows: list[dict], tz: zoneinfo.ZoneInfo) -> list[dict]:
             "first_seen_booked_at": min(booked).isoformat(timespec="seconds") if booked else "",
             "observations": str(len(obs)),
             "price": priced[-1] if priced else "",
+            "status_prev_day": before[-1]["status"] if before else "",
         })
     return out
 
@@ -153,6 +178,8 @@ def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None,
     total_hours: dict[tuple, float] = {}
     revenue: dict[tuple, float] = {}
     site_hours: dict[tuple, float] = {}
+    prev_hours: dict[tuple, float] = {}   # booked the evening before
+    kept_hours: dict[tuple, float] = {}   # ... and still booked at the start
     for row in final:
         key = (row["club"], row["slot_date"])
         a = agg.setdefault(key, {p: [0, 0] for p in ("all", "morning", "afternoon", "evening")})
@@ -162,6 +189,10 @@ def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None,
             a[p][1] += booked
         length = slot_hours(row)
         total_hours[key] = total_hours.get(key, 0.0) + length
+        if row.get("status_prev_day") == "booked":
+            prev_hours[key] = prev_hours.get(key, 0.0) + length
+            if booked:
+                kept_hours[key] = kept_hours.get(key, 0.0) + length
         if booked:
             hours[key] = hours.get(key, 0.0) + length
             price, from_site = booked_price(row, observed, prices)
@@ -196,7 +227,33 @@ def daily_occupancy(final: list[dict], prices: dict[str, float] | None = None,
         row["total_hours"] = f"{total_hours.get(key, 0.0):g}"
         row["price_per_hour_effective"] = f"{rev / booked_h:.0f}" if booked_h and rev else ""
         row["site_priced_pct"] = f"{100 * site_h / booked_h:.0f}" if booked_h else ""
+        prev_h = prev_hours.get(key, 0.0)
+        kept_h = kept_hours.get(key, 0.0)
+        row["booked_hours_prev_day"] = f"{prev_h:g}"
+        row["released_hours"] = f"{prev_h - kept_h:g}"
+        # Empty, not 0, when the slots were never seen a day ahead: nothing to compare.
+        row["released_pct"] = f"{100 * (prev_h - kept_h) / prev_h:.0f}" if prev_h else ""
+        row["grid_released"] = "1" if prev_h >= RELEASE_MIN_HOURS and kept_h < RELEASE_KEPT_MIN * prev_h else ""
         out.append(row)
+    return out
+
+
+def usual_hours(offered: dict[str, float]) -> dict[str, float]:
+    """Court-hours a club usually offers around each of its dates.
+
+    `offered` maps date -> total_hours observed. For every date the answer is the
+    most common value among the dates within COMPLETE_WINDOW_DAYS on either side
+    (ties going to the lower value), so a lasting change in opening hours only
+    affects how the days around it are judged.
+    """
+    dates = {d: dt.date.fromisoformat(d) for d in offered}
+    out = {}
+    for d, day in dates.items():
+        counts: dict[float, int] = {}
+        for other, value in offered.items():
+            if abs((dates[other] - day).days) <= COMPLETE_WINDOW_DAYS:
+                counts[value] = counts.get(value, 0) + 1
+        out[d] = max(counts.items(), key=lambda kv: (kv[1], -kv[0]))[0]
     return out
 
 
@@ -212,15 +269,27 @@ def dashboard(daily: list[dict], final: list[dict], today: dt.date,
       are averaged against: over the 6 observed days of October 2026 it was 44.0%
       vs 38.2%, and over the whole 24-day history 1-3 points per club. It is always
       downward, and it never goes away as long as the two days are counted.
-    - the day must have been fully observed, i.e. its slot count equals the club's
-      usual full-day count. "Usual" is per slot length, not per club: when
-      padelpoint.md moved from half-hour to full-hour slots on 2026-10-10 a full
-      day went from 288 slots to 144, and a single per-club maximum would have
-      dropped every day after the change as if collection had started late - the
-      club would have quietly stopped moving in this table. A day where collection
-      really did start late still has fewer slots than its peers of the same length.
+    - the day must have been fully observed, measured in COURT-HOURS, not slots:
+      total_hours is courts x opening hours, so it does not move when the grid
+      step does (PadelPoint went from 288 half-hour slots to 144 full-hour ones on
+      2026-10-10 and stayed at 144 court-hours a day). A day counts when its
+      total_hours reaches what the club usually offers around that date; fewer
+      hours means collection started late or lost part of the grid.
 
-    Occupancy is measured in court-hours, not in slots, for the same reason: a
+      "Usually" is the most common total_hours among the club's days within
+      COMPLETE_WINDOW_DAYS on either side, not the club's maximum ever. A maximum
+      breaks on the day a club ADDS opening hours: padelpoint.md added a
+      23:00-24:00 slot on 2026-10-13 (144 -> 153 court-hours) and every earlier
+      day was suddenly "incomplete", which silently cut 105 booked hours out of
+      the week of 2026-10-05. A local mode also keeps history valid when a club
+      drops hours: only the days around the change are judged against the new
+      shape. Ties go to the lower value, so a club in transition keeps its days.
+
+    A day the booking grid emptied out (grid_released) is dropped too: see
+    RELEASE_MIN_HOURS. Both exclusions are counted in zile_incomplete and
+    zile_eliberate so a club cannot quietly stop moving in this table.
+
+    Occupancy is measured in court-hours for the same reason as completeness: a
     half-hour slot and a full-hour slot are not one unit of the same thing.
 
     `today` is the local date in the configured timezone, not UTC.
@@ -236,18 +305,19 @@ def dashboard(daily: list[dict], final: list[dict], today: dt.date,
             continue  # not finished yet: bookings for it are still coming in
         by_club.setdefault(row["club"], []).append(row)
 
-    def era(row: dict) -> float:
-        """Hours per slot on that day: the grid step, as the data itself reports it."""
-        slots = int(row["total_slots"])
-        return round(float(row.get("total_hours") or 0) / slots, 3) if slots else 0.0
-
     out = []
     for club in sorted(by_club):
         rows = by_club[club]
-        full: dict[float, int] = {}
+        offered = {r["date"]: float(r.get("total_hours") or 0) for r in rows}
+        full = usual_hours(offered)
+        complete, incomplete, released = [], 0, 0
         for r in rows:
-            full[era(r)] = max(full.get(era(r), 0), int(r["total_slots"]))
-        complete = [r for r in rows if int(r["total_slots"]) == full[era(r)]]
+            if r.get("grid_released"):
+                released += 1
+            elif offered[r["date"]] >= full[r["date"]]:
+                complete.append(r)
+            else:
+                incomplete += 1
         if not complete:
             continue
         days = len(complete)
@@ -274,6 +344,8 @@ def dashboard(daily: list[dict], final: list[dict], today: dt.date,
             "venit_estimat_mdl": f"{round(revenue):d}" if revenue is not None else "",
             "venit_estimat_pe_zi_mdl": f"{round(revenue / days):d}" if revenue is not None else "",
             "pret_ora_efectiv": f"{revenue / booked_h:.0f}" if revenue and booked_h else "",
+            "zile_incomplete": str(incomplete),
+            "zile_eliberate": str(released),
         })
     return out
 

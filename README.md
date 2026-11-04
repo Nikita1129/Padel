@@ -7,7 +7,8 @@ derivate într-un Google Sheet: `dashboard` (un rând per club: cât a vândut �
 perioada urmărită, doar zilele observate complet), `slots_final` (ultima stare observată înainte de
 începerea slotului + când a fost văzut prima dată rezervat) și `daily_occupancy`
 (ocupare pe zi și club, împărțită dimineață / după-amiază / seară, plus
-`revenue_estimate_mdl` = ore-teren rezervate × prețul orei). Prețul e cel afișat de
+`revenue_estimate_mdl` = ore-teren rezervate × prețul orei și `released_pct` = cât din
+ce arăta site-ul rezervat seara trecută a dispărut până la start). Prețul e cel afișat de
 site pentru slotul respectiv, apoi cel afișat pentru aceeași oră la același club, iar
 unde site-ul nu arată niciun preț se folosește `price_per_hour` din config —
 `site_priced_pct` spune cât din ore a fost evaluat cu preț real. Rămâne o estimare,
@@ -85,14 +86,31 @@ nu scrie nimic.
    un club care lipsește dintr-un snapshot: pierzi o observație, nu slotul.
 5. `dashboard` numără doar zilele **încheiate** și complet observate. Azi și mâine au
    grila completă dar rezervările încă nu au venit, deci ar trage ocuparea în jos.
-   „Complet observată" se judecă per pas de grilă, nu per club: când PadelPoint a
-   trecut de la sloturi de 30 min la o oră (2026-10-10), ziua plină a scăzut de la 288
-   la 144 de sloturi, iar un singur maxim pe club ar fi exclus silențios toate zilele
-   de după schimbare. Ocuparea din `dashboard` se măsoară în ore-teren, nu în sloturi,
-   din același motiv.
-6. Alarma de prospețime (`tools/check_freshness.py`, ultimul pas din workflow) verifică
+   „Complet observată" se măsoară în **ore-teren**, nu în sloturi: `total_hours` =
+   terenuri × ore de program, deci nu se mișcă atunci când se schimbă pasul grilei
+   (PadelPoint a trecut de la 288 sloturi de 30 min la 144 de o oră pe 2026-10-10 și a
+   rămas la 144 ore-teren pe zi). Ziua intră dacă orele oferite ajung la cât oferă
+   clubul **de obicei în jurul acelei date** — nu la maximul lui istoric: când
+   PadelPoint a adăugat slotul 23:00–24:00 pe 2026-10-13 (144 → 153 ore-teren), un
+   maxim pe club ar fi declarat „incomplete" toate zilele dinainte și ar fi tăiat 105
+   ore rezervate din săptămâna de 5–11 octombrie. Ocuparea se măsoară în ore-teren din
+   același motiv.
+6. O zi în care site-ul **eliberează rezervările** pe care le arăta cu o zi înainte nu
+   mai e dovadă a ce s-a vândut, deci iese din `dashboard` (`grid_released` în
+   `daily_occupancy`). Grila Divi de pe Courtica a început să facă asta pe 2026-10-12:
+   sloturi rezervate de o zi au trecut pe liber în cursul dimineții și au rămas așa, iar
+   13 octombrie s-a închis cu 0 din 64 de sloturi rezervate la un club care rulează la
+   ~60%. Pragul e „mai mult de jumătate din orele de ieri seară au dispărut", cu minim
+   5 ore pe zi ca să fie judecabilă (vezi `RELEASE_*` în `collector/derive.py`):
+   fluctuația normală e 10–30% la toate cluburile, iar cea mai mare zi nemarcată a fost
+   37%. Zilele scoase se numără în `zile_incomplete` și `zile_eliberate`, ca un club să
+   nu poată îngheța în tăcere.
+7. Alarma de prospețime (`tools/check_freshness.py`, ultimul pas din workflow) verifică
    fiecare club separat: un club fără nicio înregistrare la mai puțin de 6 h de ultima
    colectare reușită face rularea să iasă 1, chiar dacă celelalte cluburi sunt la zi.
+   Același pas iese 1 cât timp există o zi `grid_released` în ultimele 3 zile — altfel
+   pierderea ar fi invizibilă, clubul doar s-ar opri din mișcare. Se taie cu
+   `--release-lookback-days 0`.
 
 Teste (fără rețea): `pytest`. Verificare de paritate cu datele vechi Apify:
 `python tools/parity_check.py`. Import unic al exportului vechi:

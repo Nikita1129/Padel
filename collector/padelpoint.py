@@ -54,8 +54,10 @@ NAV_TIMEOUT_MS = 45_000
 DATE_INPUT_TIMEOUT_MS = 30_000
 LOAD_ATTEMPTS = 2
 
-JS_HAS_SLOTS = """() => [...document.querySelectorAll('button')]
-    .some(b => /^\\d{1,2}:\\d{2}/.test((b.innerText || '').trim()))"""
+# A court is open exactly when the "back to map" button exists. Slot buttons are not a usable
+# signal: since 2026-11-01 the map view also lists every court's free slots underneath it.
+JS_COURT_OPEN = """() => [...document.querySelectorAll('button')]
+    .some(x => /napoi la hart/i.test(x.getAttribute('aria-label') || ''))"""
 JS_BACK_TO_MAP = """() => {
     const b = [...document.querySelectorAll('button')]
         .find(x => /napoi la hart/i.test(x.getAttribute('aria-label') || ''));
@@ -81,12 +83,20 @@ JS_CLICK_COURT = """([idx, lvl]) => {
     return true;
 }"""
 JS_READ = """() => {
-    const btns = [...document.querySelectorAll('button')]
-        .filter(b => /^\\d{1,2}:\\d{2}/.test((b.innerText || '').trim()));
-    const cap = [...document.querySelectorAll('*')]
+    const isSlot = b => /^\\d{1,2}:\\d{2}/.test((b.innerText || '').trim());
+    const back = [...document.querySelectorAll('button')]
+        .find(x => /napoi la hart/i.test(x.getAttribute('aria-label') || ''));
+    if (!back) return { court: null, buttons: [] };
+    // The page also lists every court's free slots below the map, so read only the opened
+    // court's own panel: the smallest ancestor of the back button that holds slot buttons.
+    let panel = back.parentElement;
+    while (panel && ![...panel.querySelectorAll('button')].some(isSlot)) panel = panel.parentElement;
+    if (!panel) return { court: null, buttons: [] };
+    const cap = [...panel.querySelectorAll('*')]
         .find(e => e.children.length === 0 && /^Court\\s+\\d+$/i.test((e.textContent || '').trim()));
     return { court: cap ? cap.textContent.trim() : null,
-             buttons: btns.map(b => [(b.innerText || '').trim(), !!b.disabled]) };
+             buttons: [...panel.querySelectorAll('button')].filter(isSlot)
+                 .map(b => [(b.innerText || '').trim(), !!b.disabled]) };
 }"""
 
 
@@ -172,7 +182,7 @@ def collect_padelpoint(club: Club, slot_date: dt.date, now: dt.datetime, browser
 
         courts: dict[str, list[tuple[str, bool]]] = {}
         for n in range(1, club.expected_courts + 1):
-            if page.evaluate(JS_HAS_SLOTS):
+            if page.evaluate(JS_COURT_OPEN):
                 page.evaluate(JS_BACK_TO_MAP)
                 _wait(page, WAIT_AFTER_CLICK_MS)
             opened = None
